@@ -1,1 +1,971 @@
-<html><body><h1>test</h1></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI家教 Prompt设计方案 — 初中数学</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #818CF8;
+            --primary-bg: #EEF2FF;
+            --accent: #F59E0B;
+            --accent-bg: #FFFBEB;
+            --success: #10B981;
+            --success-bg: #ECFDF5;
+            --danger: #EF4444;
+            --danger-bg: #FEF2F2;
+            --g50: #F9FAFB; --g100: #F3F4F6; --g200: #E5E7EB;
+            --g300: #D1D5DB; --g500: #6B7280; --g700: #374151; --g900: #111827;
+            --r: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif; color: var(--g900); background: var(--g50); line-height: 1.7; }
+
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #A855F7 100%); color: white; padding: 70px 24px 50px; text-align: center; }
+        .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .hero .sub { font-size: 1.1rem; opacity: 0.9; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); padding: 5px 16px; border-radius: 100px; font-size: 0.85rem; }
+
+        /* Layout */
+        .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 56px 0; }
+        section + section { border-top: 1px solid var(--g200); }
+        .sec-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); margin-bottom: 6px; }
+        .sec-title { font-size: 1.5rem; font-weight: 800; color: var(--g900); margin-bottom: 8px; }
+        .sec-desc { font-size: 0.95rem; color: var(--g500); margin-bottom: 28px; }
+
+        /* Cards */
+        .card { background: white; border-radius: var(--r); box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 24px; margin-bottom: 16px; border: 1px solid var(--g100); }
+        .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; }
+
+        /* Timeline - Compact */
+        .tl { display: grid; grid-template-columns: 1fr; gap: 0; position: relative; padding-left: 28px; margin-bottom: 8px; }
+        .tl::before { content:''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--primary), var(--accent)); }
+        .tl-step { position: relative; padding: 12px 0 20px 20px; }
+        .tl-step::before { content:''; position: absolute; left: -24px; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid var(--primary-bg); }
+        .tl-step:last-child::before { background: var(--accent); }
+        .tl-num { font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .tl-step h4 { font-size: 0.95rem; font-weight: 700; margin: 2px 0 4px; }
+        .tl-step p { font-size: 0.85rem; color: var(--g600, #4B5563); }
+        .tl-my { display: inline-block; background: var(--accent-bg); color: #92400E; font-size: 0.8rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-top: 6px; }
+        .tl-insight { background: var(--primary-bg); border-radius: 6px; padding: 8px 12px; margin-top: 6px; font-size: 0.82rem; color: var(--g700); }
+        .tl-insight::before { content: '💡 '; }
+
+        /* 3 Highlights */
+        .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .hl-card { background: white; border-radius: var(--r); padding: 24px; border: 1px solid var(--g200); text-align: center; transition: box-shadow 0.2s; }
+        .hl-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .hl-icon { font-size: 2rem; margin-bottom: 12px; }
+        .hl-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .hl-card p { font-size: 0.85rem; color: var(--g500); line-height: 1.6; }
+
+        /* Table */
+        .tw { overflow-x: auto; margin: 12px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { background: var(--g100); font-weight: 600; text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--g200); color: var(--g700); }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--g100); color: var(--g700); vertical-align: top; }
+
+        /* Comparison */
+        .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+        .cmp-bad { background: var(--danger-bg); border: 1px solid #FECACA; border-radius: var(--r); padding: 16px; }
+        .cmp-good { background: var(--success-bg); border: 1px solid #A7F3D0; border-radius: var(--r); padding: 16px; }
+        .cmp-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+        .cmp-bad .cmp-label { color: var(--danger); }
+        .cmp-good .cmp-label { color: var(--success); }
+        .cmp-text { font-size: 0.88rem; color: var(--g700); }
+
+        /* Chat */
+        .chat { background: var(--g100); border-radius: var(--r); padding: 20px; margin: 14px 0; }
+        .bubble { max-width: 85%; padding: 10px 14px; border-radius: 14px; margin-bottom: 10px; font-size: 0.88rem; line-height: 1.6; }
+        .b-teacher { background: var(--primary); color: white; border-bottom-left-radius: 4px; }
+        .b-student { background: white; color: var(--g700); border-bottom-right-radius: 4px; margin-left: auto; }
+        .b-label { font-size: 0.72rem; font-weight: 600; color: var(--g500); margin-bottom: 3px; }
+        .b-label-r { text-align: right; }
+
+        /* Architecture */
+        .arch { background: white; border: 2px solid var(--primary-light); border-radius: var(--r); padding: 28px; text-align: center; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 0.78rem; white-space: pre; overflow-x: auto; color: var(--g700); line-height: 1.5; }
+
+        /* Issue Grid */
+        .issues { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+        .iss { background: white; border: 1px solid var(--g200); border-radius: var(--r); padding: 16px; }
+        .iss-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--danger-bg); color: var(--danger); border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 6px; }
+        .iss-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; }
+        .iss-fix { font-size: 0.82rem; color: var(--success); font-weight: 600; }
+
+        /* Badge */
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 0.72rem; font-weight: 600; }
+        .badge-red { background: #FECACA; color: #DC2626; }
+        .badge-orange { background: #FED7AA; color: #C2410C; }
+        .badge-blue { background: #DBEAFE; color: #2563EB; }
+        .badge-green { background: #D1FAE5; color: #059669; }
+
+        /* Collapsible */
+        .coll { border: 1px solid var(--g200); border-radius: var(--r); margin-bottom: 10px; overflow: hidden; background: white; }
+        .coll-h { padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.92rem; user-select: none; }
+        .coll-h:hover { background: var(--g50); }
+        .coll-h .arr { transition: transform 0.3s; font-size: 0.75rem; color: var(--g300); }
+        .coll.open .coll-h .arr { transform: rotate(180deg); }
+        .coll-b { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .coll.open .coll-b { max-height: 5000px; }
+        .coll-inner { padding: 0 18px 18px; }
+
+        /* Highlight box */
+        .hbox { border-left: 4px solid var(--primary); background: var(--primary-bg); border-radius: 0 var(--r) var(--r) 0; padding: 14px 18px; margin: 14px 0; font-size: 0.9rem; }
+        .hbox.accent { border-left-color: var(--accent); background: var(--accent-bg); }
+        .hbox.success { border-left-color: var(--success); background: var(--success-bg); }
+
+        /* State flow compact */
+        .sf { display: flex; align-items: center; gap: 0; margin: 16px 0; flex-wrap: wrap; }
+        .sf-node { background: var(--primary-bg); border: 1px solid var(--primary-light); border-radius: 8px; padding: 8px 14px; font-size: 0.82rem; font-weight: 600; color: var(--primary); text-align: center; }
+        .sf-arrow { color: var(--g300); font-size: 0.8rem; padding: 0 6px; }
+
+        /* Footer */
+        footer { background: var(--g900); color: var(--g300); padding: 32px 24px; text-align: center; font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.7rem; }
+            .highlights { grid-template-columns: 1fr; }
+            .cmp { grid-template-columns: 1fr; }
+            .issues { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+    <h1>AI家教 Prompt 设计方案</h1>
+    <p class="sub">让大模型变身"优秀辅导老师" · 初中数学 · Skill 按需加载架构</p>
+    <div class="hero-tags">
+        <span class="hero-tag">初中数学 7~9年级</span>
+        <span class="hero-tag">3题型 × 5层深度</span>
+        <span class="hero-tag">5个Skill模块</span>
+        <span class="hero-tag">实测验证 · V2→V3迭代</span>
+    </div>
+</div>
+
+<div class="wrap">
+
+<!-- ===== 1. 设计过程 ===== -->
+<section id="process">
+    <div class="sec-label">从构思到落地</div>
+    <div class="sec-title">设计过程：6轮迭代</div>
+    <div class="sec-desc">全程与 AI 深度共创。不是"让 AI 写一个 Prompt"，而是通过反复质疑、模拟、发现问题、迭代。</div>
+
+    <div class="tl">
+        <div class="tl-step">
+            <div class="tl-num">第一轮 · 定方向</div>
+            <h4>选初中数学，聚焦3个题型做极致</h4>
+            <p>选择应用题+几何证明+压轴题——简单→中等→困难的梯度，且每个需要完全不同的辅导策略，能充分展示方案的差异化。</p>
+            <div class="tl-my">我的判断：3个题型深挖 > 6个题型浅覆盖</div>
+        </div>
+        <div class="tl-step">
+            <div class="tl-num">第二轮 · 定深度</div>
+            <h4>每个题型拆成"四层深度结构"</h4>
+            <p>场景画像 → 学生卡点图谱 → 辅导策略流 → 好辅导vs坏辅导对比。关键洞察：学生不是笼统的"不会"，而是卡在具体的某一步。</p>
+        </div>
+        <div class="tl-step">
+            <div class="tl-num">第三轮 · 加机制</div>
+            <h4>引入"错误分类"和"元认知训练"</h4>
+            <p>AI 提供了4个升级方向。我筛选了2个——错误分类系统和元认知训练，因为这两个最有区分度，市面上没有 Prompt 方案做到。</p>
+            <div class="tl-my">我的筛选：认知科学太学术，迁移训练可并入元认知。选能落地的。</div>
+        </div>
+        <div class="tl-step">
+            <div class="tl-num">第四轮 · 质疑架构 ⭐</div>
+            <h4>"一个大 Prompt 塞这么多东西，能执行吗？"</h4>
+            <p>写完初版 System Prompt 后我主动质疑——指令太多模型顾此失彼。于是提出 Skill 按需加载架构，把"写Prompt"升级为"设计Prompt系统"。</p>
+            <div class="tl-insight">这是最关键的转折。从 Prompt → Prompt Architecture。</div>
+        </div>
+        <div class="tl-step">
+            <div class="tl-num">第五轮 · 压力测试 ⭐</div>
+            <h4>模拟真实用户，找出10个结构性问题</h4>
+            <p>没有直接交付，而是模拟初中生晚上写作业的场景，走完整个引导流程。发现学生说"不知道"时引导卡死、几何题AI看不见图、学生赶作业不想被引导等10个真实问题。</p>
+            <div class="tl-my">我的做法：主动找问题，而不是写完就交</div>
+        </div>
+        <div class="tl-step">
+            <div class="tl-num">第六轮 · 全部修复</div>
+            <h4>V1 → V2：线性流程→状态机，新增逆向Debug等</h4>
+            <p>10个问题逐一修复。引导链改为状态机、加入冷启动降级、效率模式、步骤级路由、水平动态评估。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 2. 三个核心亮点 ===== -->
+<section id="highlights">
+    <div class="sec-label">方案核心</div>
+    <div class="sec-title">三个创新点</div>
+    <div class="sec-desc">这套方案区别于"写一个 System Prompt"的三个关键差异</div>
+
+    <div class="highlights">
+        <div class="hl-card">
+            <div class="hl-icon">🎯</div>
+            <h3>错误分类系统</h3>
+            <p>概念错 → 用反例让学生自己发现<br>策略错 → 让学生走到死胡同<br>计算错 → 直接指出哪步错<br><strong>精准分类 = 精准应对</strong></p>
+        </div>
+        <div class="hl-card">
+            <div class="hl-icon">🧠</div>
+            <h3>元认知训练</h3>
+            <p>做完题不只是总结答案<br>而是引导学生自问：<br>"我卡在哪？为什么卡？<br>下次怎么办？"<br><strong>教"怎么思考"</strong></p>
+        </div>
+        <div class="hl-card">
+            <div class="hl-icon">🏗️</div>
+            <h3>Skill 按需加载</h3>
+            <p>不把所有规则塞进一个 Prompt<br>主Prompt负责路由<br>题型策略按需注入<br><strong>从Prompt到Architecture</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 3. 深度样例 ===== -->
+<section id="example">
+    <div class="sec-label">深度展示</div>
+    <div class="sec-title">应用题：完整引导链示例</div>
+    <div class="sec-desc">以应用题为例，展示从卡点分析到引导策略到错误分类的完整深度</div>
+
+    <!-- 卡点图谱 -->
+    <div class="card">
+        <h3>学生卡点图谱</h3>
+        <div class="tw">
+            <table>
+                <thead><tr><th>卡点</th><th>表现</th><th>根因</th><th>占比</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>条件提取</strong></td><td>"甲比乙快20%"不会转化为数学表达</td><td>自然语言→数学语言翻译能力弱</td><td>~30%</td></tr>
+                    <tr><td><strong>设未知数</strong></td><td>不知道设谁为x</td><td>缺乏"用x串联所有量"的意识</td><td>~25%</td></tr>
+                    <tr><td><strong>找等量关系</strong></td><td>条件提取了但列不出方程</td><td>不理解方程=两个表达式相等</td><td>~30%</td></tr>
+                    <tr><td><strong>检验答案</strong></td><td>解出x=−3不检查合理性</td><td>缺乏自检习惯</td><td>~15%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 好坏对比 -->
+    <div class="card">
+        <h3>好辅导 vs 坏辅导</h3>
+        <div class="cmp">
+            <div class="cmp-bad">
+                <div class="cmp-label">❌ 通用大模型的回答</div>
+                <div class="cmp-text">"设乙的速度为x km/h，则甲的速度为1.2x km/h，由题意得方程..."<br><br>→ 直接跳过了学生最需要学会的思维过程</div>
+            </div>
+            <div class="cmp-good">
+                <div class="cmp-label">✅ 我们的AI家教</div>
+                <div class="cmp-text">"这道题里出现了甲和乙两个人，他们各自有什么信息？我们先整理一下。"<br><br>→ 引导学生自己提取条件，建立思维框架</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引导对话示例 -->
+    <div class="card">
+        <h3>引导对话示例：学生在"设未知数"卡住</h3>
+        <div class="chat">
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">很好，你已经整理出了甲和乙的速度、时间、路程。现在这些量里面，哪个是题目问你求的？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">emmm...不知道设什么</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#FEF3C7;color:#92400E;padding:1px 6px;border-radius:4px;font-size:0.7rem;">冷启动降级触发</span></div>
+            <div class="bubble b-teacher">没关系。题目问的是"AB两地距离"——这个你现在不知道对吧？那我们就设它为x。你觉得行吗？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">好，设距离为x...但甲走了40千米，那乙走了多少？</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">你自己说出来了！甲走了40千米，总距离是x，那乙走了多少？用x表示试试。</div>
+        </div>
+    </div>
+
+    <!-- 错误分类实战 -->
+    <div class="card">
+        <h3>错误分类实战：三种错误三种应对</h3>
+        <div class="tw">
+            <table>
+                <thead><tr><th>类型</th><th>学生的错误</th><th>AI的应对</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-red">概念错</span></td>
+                        <td>"1.5倍"写成"+1.5"</td>
+                        <td><strong>用反例：</strong>"如果乙=10，1.5倍是15，+1.5是11.5，哪个对？"</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-orange">策略错</span></td>
+                        <td>设路程为x，后续表达困难</td>
+                        <td><strong>让学生走：</strong>走不动时才问"换个量设x更方便？"</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-blue">计算错</span></td>
+                        <td>通分时分子算错</td>
+                        <td><strong>直接指出：</strong>"方程列得好，通分那步再算一遍。"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 元认知 -->
+    <div class="card">
+        <h3>做完题后：元认知反思</h3>
+        <div class="chat">
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">做完了，很棒。回想一下——你在哪一步卡住最久？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">列方程那步...不知道用哪句话</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">对，那下次遇到应用题，你打算第一步做什么？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">先画表格整理条件？</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">完全正确。这就是你从这道题带走的方法——比答案本身重要多了。</div>
+        </div>
+    </div>
+
+    <!-- 另外两个题型折叠 -->
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📐 几何证明题：逆向分析引导链 + 图形口述协议</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="hbox">
+                <strong>核心引导思路：</strong>逆向分析——"要证什么？→需要什么条件？→哪些已有哪些还缺？"。不直接说加什么辅助线，而是问"图里能不能创造一个新三角形？"
+            </div>
+            <p style="margin:12px 0;font-size:0.9rem;color:var(--g700);">
+                <strong>卡点：</strong>不知道从哪入手(35%) · 对应元素找不全(25%) · 辅助线恐惧(20%) · 书写跳步(20%)<br><br>
+                <strong>图形信息协议（V2新增）：</strong>能看到图 → 描述确认；看不到 → 要求学生口述；学生要求"帮我画" → 诚实说明交互限制，改为口头指导。
+            </p>
+            <div class="cmp">
+                <div class="cmp-bad"><div class="cmp-label">❌ 坏辅导</div><div class="cmp-text">"作辅助线EF∥BC，由平行线性质..."</div></div>
+                <div class="cmp-good"><div class="cmp-label">✅ 好辅导</div><div class="cmp-text">"结论让你证什么？要证它，你需要什么？"</div></div>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🎯 二次函数压轴题：化解畏难 + 分步拆解 + 分类讨论</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="hbox">
+                <strong>核心引导思路：</strong>"先别慌，只看第(1)问。" 每做完一问就肯定学生，建立信心。提醒前一问的结论后面要用。分类讨论前先问"P还能在什么位置？"
+            </div>
+            <p style="margin:12px 0;font-size:0.9rem;color:var(--g700);">
+                <strong>卡点：</strong>畏难放弃(20%) · 动点参数化(25%) · 分类讨论不全(30%) · 小问脱节(25%)<br><br>
+                <strong>跨Skill调度（V2新增）：</strong>第(3)问涉及几何证明 → 借用Skill 2的逆向分析方法。一道题不同步骤可调用不同Skill。
+            </p>
+            <div class="cmp">
+                <div class="cmp-bad"><div class="cmp-label">❌ 坏辅导</div><div class="cmp-text">"设P(t, t²−2t+1)，分两种情况..."</div></div>
+                <div class="cmp-good"><div class="cmp-label">✅ 好辅导</div><div class="cmp-text">"第(1)问在问什么？我们一步步来。"</div></div>
+            </div>
+        </div></div>
+    </div>
+</section>
+
+<!-- ===== 4. 架构 + 10个问题 ===== -->
+<section id="architecture">
+    <div class="sec-label">Prompt 架构</div>
+    <div class="sec-title">Skill 按需加载 · 状态机引导</div>
+    <div class="sec-desc">一个极简主Prompt负责路由，5个Skill按需注入</div>
+
+    <div class="arch">┌──────────────────────────────────────┐
+│       主 System Prompt（~500字）      │
+│  输入预处理 · 水平评估 · 模式切换     │
+│  步骤级路由 · 冷启动降级 · 兜底       │
+└──────────────┬───────────────────────┘
+               │ 按需加载（步骤级）
+    ┌──────────┼──────────┐
+    ▼          ▼          ▼
+┌────────┐ ┌────────┐ ┌────────┐
+│ Skill1 │ │ Skill2 │ │ Skill3 │
+│ 应用题  │ │几何证明 │ │ 压轴题  │
+│ 状态机  │ │+图形协议│ │+跨Skill│
+└────┬───┘ └────┬───┘ └────┬───┘
+     └──────────┼──────────┘
+          ┌─────┴─────┐
+          ▼           ▼
+     ┌────────┐  ┌────────┐
+     │ Skill4 │  │ Skill5 │
+     │元认知   │  │逆向    │
+     │条件触发 │  │Debug   │
+     └────────┘  └────────┘</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0;">
+        <div style="background:var(--primary-bg);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:var(--primary);">📋 输入预处理</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">残缺→追问 · 图片→口述确认</div>
+        </div>
+        <div style="background:#FEF3C7;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:#92400E;">📊 水平评估</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">前2轮评估 · 持续动态调整</div>
+        </div>
+        <div style="background:#DBEAFE;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:#1D4ED8;">🔀 三种模式</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">引导 · 效率 · Debug</div>
+        </div>
+        <div style="background:#F3E8FF;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:#7C3AED;">🛤️ 步骤级路由</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">一道题可调用多个Skill</div>
+        </div>
+    </div>
+
+    <!-- 为什么不用大Prompt -->
+    <div class="card">
+        <h3>为什么 Skill 架构而非单一大 Prompt？</h3>
+        <div class="tw">
+            <table>
+                <thead><tr><th>维度</th><th>单一大 Prompt</th><th>Skill 按需加载</th></tr></thead>
+                <tbody>
+                    <tr><td>指令长度</td><td>~2000字，模型尾部遗忘</td><td style="color:var(--success);font-weight:600;">~500 + ~400字</td></tr>
+                    <tr><td>规则冲突</td><td>所有策略同时在场</td><td style="color:var(--success);font-weight:600;">只加载当前Skill</td></tr>
+                    <tr><td>迭代成本</td><td>改一处影响全局</td><td style="color:var(--success);font-weight:600;">只改对应Skill</td></tr>
+                    <tr><td>扩展性</td><td>越来越臃肿</td><td style="color:var(--success);font-weight:600;">新增Skill即可</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 5. 10个真实问题 ===== -->
+<section id="problems">
+    <div class="sec-label">V1 → V2 迭代</div>
+    <div class="sec-title">10个真实问题 & 修复</div>
+    <div class="sec-desc">模拟真实用户使用，发现并修复的结构性缺陷——这是方案的核心竞争力</div>
+
+    <div class="issues">
+        <div class="iss"><div class="iss-num">1</div><div class="iss-title">学生说"不知道"引导卡死</div><div class="iss-fix">→ 冷启动降级：示范→模仿</div></div>
+        <div class="iss"><div class="iss-num">2</div><div class="iss-title">错误分类边界模糊</div><div class="iss-fix">→ 追问澄清优先，再自然判断</div></div>
+        <div class="iss"><div class="iss-num">3</div><div class="iss-title">线性引导链太死板</div><div class="iss-fix">→ 改为状态机，支持跳转回退</div></div>
+        <div class="iss"><div class="iss-num">4</div><div class="iss-title">元认知变机械仪式</div><div class="iss-fix">→ 条件触发，4种场景4种深度</div></div>
+        <div class="iss"><div class="iss-num">5</div><div class="iss-title">几何题 AI 看不见图</div><div class="iss-fix">→ 图形口述协议 + 限制声明</div></div>
+        <div class="iss"><div class="iss-num">6</div><div class="iss-title">学生赶作业不想被引导</div><div class="iss-fix">→ 效率模式：快速提示不给全答案</div></div>
+        <div class="iss"><div class="iss-num">7</div><div class="iss-title">带着错误答案来 debug</div><div class="iss-fix">→ 新增 Skill 5（逆向Debug）</div></div>
+        <div class="iss"><div class="iss-num">8</div><div class="iss-title">输入残缺/模糊/口语化</div><div class="iss-fix">→ 信息补全前置流程</div></div>
+        <div class="iss"><div class="iss-num">9</div><div class="iss-title">一道题横跨多个题型</div><div class="iss-fix">→ 步骤级路由替代题目级</div></div>
+        <div class="iss"><div class="iss-num">10</div><div class="iss-title">不同水平需要不同粒度</div><div class="iss-fix">→ 水平动态评估机制</div></div>
+    </div>
+</section>
+
+<!-- ===== 6. 实测案例 ===== -->
+<section id="testing">
+    <div class="sec-label">模块三 · 步骤1：选取真题 & 步骤2：初始测试</div>
+    <div class="sec-title">V2 Prompt 实测：真实对话暴露结构性缺陷</div>
+    <div class="sec-desc">选一道中考行程函数题，我扮演学生与AI家教完成辅导全过程。先看V2哪里翻车，再看优化后的效果。</div>
+
+    <!-- 测试题目 -->
+    <div class="card">
+        <h3>测试题目（中考真题 · 行程函数）</h3>
+        <div class="hbox">
+            AB两地相距200千米。货车甲从A地出发运货往B地，行驶一段路程后出现故障停车。B地立即派货车乙前往接运物资。乙到达甲处后，用18分钟搬运物资，随后返回B地。求货车乙在遇到甲之前，离开出发地的路程 y 关于时间 x 的函数表达式。（附函数图像）
+        </div>
+        <p style="font-size:0.85rem;color:var(--g500);margin-top:8px;">选题理由：带图、多阶段、信息密度高——最能暴露 Prompt 在真实场景下的表现。</p>
+    </div>
+
+    <!-- 对话实录 -->
+    <div class="card">
+        <h3>对话实录（节选关键片段）</h3>
+
+        <div style="margin-bottom:16px;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--primary);margin-bottom:6px;">片段一：正常开场</div>
+            <div class="chat">
+                <div class="b-label b-label-r">🧑‍🎓 学生</div>
+                <div class="bubble b-student">老师这题我不会</div>
+                <div class="b-label">👨‍🏫 AI老师</div>
+                <div class="bubble b-teacher">没关系！先只看第(1)问。题目里一共有几辆车？分别从哪里出发？</div>
+            </div>
+            <div class="hbox success" style="font-size:0.82rem;">✅ 开场正常：化解畏难 + 分步拆解 + 从信息提取开始</div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--danger);margin-bottom:6px;">片段二：读图出错 ⚠️</div>
+            <div class="chat">
+                <div class="b-label b-label-r">🧑‍🎓 学生</div>
+                <div class="bubble b-student">甲一直停着啊</div>
+                <div class="b-label">👨‍🏫 AI老师</div>
+                <div class="bubble b-teacher">再看看图——甲那条线在2.6之后是继续上升的哦</div>
+                <div class="b-label b-label-r">🧑‍🎓 学生</div>
+                <div class="bubble b-student">你仔细看下图！甲就是一直停着的！</div>
+                <div class="b-label">👨‍🏫 AI老师</div>
+                <div class="bubble b-teacher">啊你说得对！抱歉是我看错了...</div>
+            </div>
+            <div class="hbox accent" style="font-size:0.82rem;">🔥 <strong>问题暴露：</strong>AI读图错误后还"硬撑"了一轮，被学生纠正后才改。严重损害学生信任。</div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--danger);margin-bottom:6px;">片段三：无效追问 ⚠️</div>
+            <div class="chat">
+                <div class="b-label b-label-r">🧑‍🎓 学生</div>
+                <div class="bubble b-student">甲速度50km/h，走了1.6h</div>
+                <div class="b-label">👨‍🏫 AI老师</div>
+                <div class="bubble b-teacher">甲的速度是50km/h，你是从哪里得到的？能告诉我你怎么算的吗？</div>
+                <div class="b-label b-label-r">🧑‍🎓 学生</div>
+                <div class="bubble b-student">80÷1.6 我已经算出来了你为啥还问我？？</div>
+            </div>
+            <div class="hbox accent" style="font-size:0.82rem;">🔥 <strong>问题暴露：</strong>学生已经给了正确答案和过程，AI还在追问"你怎么算的"。不是"引导"，是"不信任学生"。</div>
+        </div>
+
+        <div>
+            <div style="font-size:0.8rem;font-weight:700;color:var(--danger);margin-bottom:6px;">片段四：拖节奏 ⚠️</div>
+            <div class="chat">
+                <div class="b-label b-label-r">🧑‍🎓 学生</div>
+                <div class="bubble b-student">甲乙相距200，甲跑了80，乙跑120，速度80，跑了1.5h</div>
+                <div class="b-label">👨‍🏫 AI老师</div>
+                <div class="bubble b-teacher">很好！那现在你能写出 y = ? 吗？</div>
+                <div class="b-label b-label-r">🧑‍🎓 学生</div>
+                <div class="bubble b-student">我答案都告诉你了...</div>
+            </div>
+            <div class="hbox accent" style="font-size:0.82rem;">🔥 <strong>问题暴露：</strong>学生已经推导出完整答案（距离、速度、时间全有），AI还在一步一步问。能2步解决的问题拖了7-8轮。</div>
+        </div>
+    </div>
+
+    <!-- 问题汇总 -->
+    <div class="card">
+        <h3>实测发现的6个结构性缺陷</h3>
+        <div class="tw">
+            <table>
+                <thead><tr><th>问题</th><th>现象</th><th>根因分析</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="badge badge-red">致命</span> 读图错误</td><td>看反甲乙的线，还硬撑一轮</td><td>LLM读图能力硬伤 + Prompt没有"不确定时让学生确认"的机制</td></tr>
+                    <tr><td><span class="badge badge-red">致命</span> 重复追问</td><td>学生答对了还在问"你怎么算的"</td><td>缺少"学生输入解析层"——不解析学生说了什么，只管执行流程</td></tr>
+                    <tr><td><span class="badge badge-orange">严重</span> 节奏拖沓</td><td>能2步完成拖到7-8轮</td><td>状态机是"教师计划"的建模，不是"学生状态"的建模</td></tr>
+                    <tr><td><span class="badge badge-orange">严重</span> 水平评估失效</td><td>学生明显能力强，还用最低档引导</td><td>"前2轮评估"是一次性标签，后续并没有真正改变策略</td></tr>
+                    <tr><td><span class="badge badge-blue">中等</span> 无增值环节</td><td>做完就结束，没有总结/易错/变式</td><td>架构只有"引导学生做出这道题"一个目标</td></tr>
+                    <tr><td><span class="badge badge-blue">中等</span> 交互和知识耦合</td><td>Skill里交互逻辑和题型知识混在一起</td><td>改交互方式要改三个Skill，维护成本高</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 核心洞察 -->
+    <div class="hbox" style="font-size:0.95rem;">
+        <strong>核心洞察：</strong>这些不是"调参数"能修的bug——是<strong>架构方向错了</strong>。V2的控制流是"老师按流程推进"，但真实辅导应该是"学生主导节奏，老师响应"。需要从架构层重新设计。
+    </div>
+
+    <!-- V3实测对比 -->
+    <div class="card" style="border:2px solid var(--success);">
+        <h3 style="color:var(--success);">✅ 优化后实测：同一道题，V3思路的效果</h3>
+        <p style="font-size:0.85rem;color:var(--g500);margin-bottom:14px;">基于V3 AI Native思路重新辅导同一道题，同一个学生。对比V2的7-8轮拖沓，V3仅用5轮完成。</p>
+
+        <div class="chat">
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">老师这题我都不太懂</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">没关系，先读一遍题，告诉我：这个故事里有几辆车？各自做了什么？像讲故事一样说就行。</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">2辆车，甲50km/h，走了1.6h，乙80km/h，中间停了一会</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#D1FAE5;color:#059669;padding:1px 6px;border-radius:4px;font-size:0.7rem;">识别：学生会读图会算速度，跳过基础引导</span></div>
+            <div class="bubble b-teacher">你已经把关键信息都从图上读出来了 👍 第(1)问问的是乙的路程函数。乙是从x=0出发的，还是从某个时间点才出发？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">乙后出发1.6h，用一小时赶上甲</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#D1FAE5;color:#059669;padding:1px 6px;border-radius:4px;font-size:0.7rem;">学生已掌握全部信息，直接推到写表达式</span></div>
+            <div class="bubble b-teacher">那你能直接写出函数表达式吗？乙从x=1.6出发，速度80。</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">y=50x吗</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#FEF3C7;color:#92400E;padding:1px 6px;border-radius:4px;font-size:0.7rem;">计算错→直接指出，不绕弯</span></div>
+            <div class="bubble b-teacher">两个地方想想：速度是谁的？你刚说乙是80。另外乙从x=1.6出发，走的时间不是x，而是？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">y=80（x-1.6）？</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#D1FAE5;color:#059669;padding:1px 6px;border-radius:4px;font-size:0.7rem;">增值收尾</span></div>
+            <div class="bubble b-teacher">✅ 对了！y=80(x-1.6)，1.6≤x≤2.6。你刚才第一次写y=50x，犯了两个典型错误——<strong>速度张冠李戴</strong>和<strong>起始时间不是0</strong>。这类题考试最容易在这两个地方丢分，记住了。</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <div style="background:var(--danger-bg);border-radius:8px;padding:14px;">
+                <div style="font-weight:700;color:var(--danger);font-size:0.85rem;margin-bottom:4px;">V2 表现</div>
+                <div style="font-size:0.82rem;color:var(--g700);">7-8轮 · 读图出错 · 反复追问已知信息 · 学生多次不耐烦 · 无增值总结</div>
+            </div>
+            <div style="background:var(--success-bg);border-radius:8px;padding:14px;">
+                <div style="font-weight:700;color:var(--success);font-size:0.85rem;margin-bottom:4px;">V3 表现</div>
+                <div style="font-size:0.82rem;color:var(--g700);">5轮完成 · 识别学生水平后跳过基础 · 错误直接精准指出 · 收尾增值防丢分</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 7. 迭代优化 ===== -->
+<section id="iteration">
+    <div class="sec-label">模块三 · 步骤3：发现问题 & 步骤4：迭代优化</div>
+    <div class="sec-title">V2 → V3：从流程驱动到 AI Native</div>
+    <div class="sec-desc">与 AI 共创的三次架构跃迁。不是修补问题，是重新思考"Prompt应该怎么写"。</div>
+
+    <!-- 三次跃迁 -->
+    <div class="card">
+        <h3>架构演进：三次认知跃迁</h3>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:16px 0;text-align:center;">
+            <div style="background:var(--danger-bg);border-radius:var(--r);padding:16px;">
+                <div style="font-weight:700;color:var(--danger);font-size:0.85rem;">V2 流程驱动</div>
+                <div style="font-size:0.78rem;color:var(--g500);margin-top:6px;">状态机 · 按步骤推</div>
+                <div style="font-size:0.78rem;color:var(--g500);">老师控制节奏</div>
+            </div>
+            <div style="font-size:1.2rem;color:var(--g300);">→</div>
+            <div style="background:var(--accent-bg);border-radius:var(--r);padding:16px;">
+                <div style="font-weight:700;color:#92400E;font-size:0.85rem;">中间态：诊断驱动</div>
+                <div style="font-size:0.78rem;color:var(--g500);margin-top:6px;">决策表 · 每轮诊断</div>
+                <div style="font-size:0.78rem;color:var(--g500);">基于学生状态选动作</div>
+            </div>
+            <div style="font-size:1.2rem;color:var(--g300);">→</div>
+            <div style="background:var(--success-bg);border-radius:var(--r);padding:16px;">
+                <div style="font-weight:700;color:var(--success);font-size:0.85rem;">V3 AI Native</div>
+                <div style="font-size:0.78rem;color:var(--g500);margin-top:6px;">身份 + 红线 + 范例</div>
+                <div style="font-size:0.78rem;color:var(--g500);">释放模型判断力</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关键转变 -->
+    <div class="card">
+        <h3>关键认知转变</h3>
+        <div class="tw">
+            <table>
+                <thead><tr><th>维度</th><th>V2 传统思维</th><th>V3 AI Native 思维</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>控制方式</strong></td><td>写规则告诉模型每步做什么</td><td style="color:var(--success);font-weight:600;">告诉模型"你是谁"，让它自己判断</td></tr>
+                    <tr><td><strong>核心机制</strong></td><td>状态机、决策表、穷举场景</td><td style="color:var(--success);font-weight:600;">身份 + 少量红线 + 高质量范例</td></tr>
+                    <tr><td><strong>模型角色</strong></td><td>执行引擎——解析规则→匹配→执行</td><td style="color:var(--success);font-weight:600;">智能体——自主判断，边界约束</td></tr>
+                    <tr><td><strong>注意力分配</strong></td><td>大量注意力在理解规则体系</td><td style="color:var(--success);font-weight:600;">全部注意力在理解学生</td></tr>
+                    <tr><td><strong>Skill内容</strong></td><td>状态机 + 引导链 + 每步话术</td><td style="color:var(--success);font-weight:600;">触发条件 + 错误模式库 + 范例对话</td></tr>
+                    <tr><td><strong>学生建模</strong></td><td>一次性标签（强/中/弱）</td><td style="color:var(--success);font-weight:600;">每轮更新的动态画像</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="hbox" style="font-size:0.85rem;margin-top:12px;">
+            <strong>一句话总结：</strong>V2把LLM当"执行引擎"，用规则覆盖它的能力；V3把判断力还给模型，用身份塑造直觉，用红线约束边界，用范例校准标准。
+        </div>
+    </div>
+
+    <!-- 三层架构 -->
+    <div class="card">
+        <h3>V3 三层架构设计</h3>
+        <div class="arch">┌─────────────────────────────────────────────────┐
+│         主Prompt（常驻，~400字）                    │
+│                                                   │
+│  身份层：教学人格（3-5句话刻画）                     │
+│  红线层：5条不可违反的铁律                           │
+│  执行层：内部解题 + 诊断-响应循环                    │
+│  输出层：格式、长度、语气约束                        │
+│  调度层：插槽读取 + Skill加载                       │
+├─────────────────────────────────────────────────┤
+│         插槽层（可选配置，全部可缺省）                │
+│                                                   │
+│  ①学生人格  ②知识图谱  ③教学风格                   │
+│  ④场景上下文 ⑤家长偏好  ⑥历史摘要                  │
+│                                                   │
+│  → 未填入时模型自动推断或用默认值                    │
+│  → 填入则覆盖默认，实现个性化                       │
+├─────────────────────────────────────────────────┤
+│         Skill层（按题型加载，不控制交互流程）          │
+│                                                   │
+│  触发条件 · 关键步骤节点 · 错误模式库 · 范例对话      │
+│                                                   │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐          │
+│  │ 应用题    │ │ 几何证明  │ │ 函数压轴  │          │
+│  └──────────┘ └──────────┘ └──────────┘          │
+└─────────────────────────────────────────────────┘</div>
+        <p style="font-size:0.85rem;color:var(--g500);margin-top:12px;text-align:center;">主Prompt管"怎么跟人说话" · 插槽管"面对谁" · Skill管"这类题学生怎么错"<br>三层完全解耦，任何一层修改不影响其他层</p>
+    </div>
+
+    <!-- 5条红线 -->
+    <div class="card">
+        <h3>V3 的 5 条红线（替代V2的状态机+决策表）</h3>
+        <div style="display:grid;gap:8px;margin-top:8px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;">
+                <span style="font-weight:700;color:var(--danger);min-width:20px;">1</span>
+                <span style="font-size:0.88rem;"><strong>不问学生已经告诉你的东西。</strong>说过的正确信息标记为已知，永远不再提问。</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;">
+                <span style="font-weight:700;color:var(--danger);min-width:20px;">2</span>
+                <span style="font-size:0.88rem;"><strong>每轮最多问一个问题。</strong>不堆叠问题增加认知负荷。</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;">
+                <span style="font-weight:700;color:var(--danger);min-width:20px;">3</span>
+                <span style="font-size:0.88rem;"><strong>不直接给答案。</strong>但学生连续两次表示不知道时，果断示范当前步骤，让他做下一步。</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;">
+                <span style="font-weight:700;color:var(--danger);min-width:20px;">4</span>
+                <span style="font-size:0.88rem;"><strong>看图不确定时不装懂。</strong>"我看这个图理解是___，你看对不对？"</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;background:var(--danger-bg);border-radius:8px;">
+                <span style="font-weight:700;color:var(--danger);min-width:20px;">5</span>
+                <span style="font-size:0.88rem;"><strong>不说"这很简单"。</strong>不评价难度，只解决问题。</span>
+            </div>
+        </div>
+        <div class="hbox success" style="font-size:0.85rem;margin-top:12px;">
+            与V2对比：V2用1500字规则控制模型行为 → V3用5条红线约束边界。模型的"智力"从"理解规则"释放到"理解学生"。
+        </div>
+    </div>
+
+    <!-- 插槽设计 -->
+    <div class="card">
+        <h3>插槽层：可配置的个性化接口</h3>
+        <p style="font-size:0.88rem;color:var(--g500);margin-bottom:14px;">所有插槽可选。全部留空也能工作（模型自行推断），填入就更精准。这是产品化的接口设计。</p>
+        <div class="tw">
+            <table>
+                <thead><tr><th>插槽</th><th>用途</th><th>示例值</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>①学生人格</strong></td><td>匹配交互风格</td><td>急躁型→节奏快少提问 / 畏难型→频繁正反馈 / 沉默型→给选择题式提问</td></tr>
+                    <tr><td><strong>②知识图谱</strong></td><td>跳过已会的，重点关注薄弱项</td><td>✅一元一次方程 ⚠️分式方程（忘记检验）❌二次函数</td></tr>
+                    <tr><td><strong>③教学风格</strong></td><td>节奏/语气/引导深度</td><td>紧凑+平等+轻推（适合能力强的学生）</td></tr>
+                    <tr><td><strong>④场景上下文</strong></td><td>不同场景不同教学目标</td><td>日常作业→理解方法 / 考前→快速过题型 / 考后订正→找具体错因</td></tr>
+                    <tr><td><strong>⑤家长偏好</strong></td><td>硬约束</td><td>"不要直接给答案" / "这周重点练分类讨论" / "控制在15分钟"</td></tr>
+                    <tr><td><strong>⑥历史摘要</strong></td><td>衔接上次辅导</td><td>"上次行程问题卡在设未知数，最终独立完成"</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Skill重新定义 -->
+    <div class="card">
+        <h3>Skill 重新定义：从"执行指令"到"教学直觉包"</h3>
+        <div class="cmp">
+            <div class="cmp-bad">
+                <div class="cmp-label">V2 Skill 内容</div>
+                <div class="cmp-text">
+                    状态机流程 + 每步引导话术 + 跳转规则<br><br>
+                    问题：<strong>控制交互流程</strong>，模型变成执行器<br>
+                    字数：500-800字/Skill
+                </div>
+            </div>
+            <div class="cmp-good">
+                <div class="cmp-label">V3 Skill 内容</div>
+                <div class="cmp-text">
+                    触发条件 + 错误模式库 + 范例对话<br><br>
+                    变化：<strong>只提供知识</strong>，模型自主决定怎么用<br>
+                    字数：200-400字/Skill
+                </div>
+            </div>
+        </div>
+
+        <div class="coll" style="margin-top:14px;">
+            <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+                <span>📋 V3 Skill 结构示例（应用题）</span>
+                <span class="arr">▼</span>
+            </div>
+            <div class="coll-b"><div class="coll-inner">
+                <pre style="background:#1E1E2E;color:#CDD6F4;border-radius:var(--r);padding:20px;font-size:0.78rem;line-height:1.7;overflow-x:auto;white-space:pre-wrap;">
+【触发条件】
+题目含：行程/工程/利润/浓度等数量关系，或要求"列方程""设x"
+
+【关键步骤节点】
+条件提取 → 设未知数 → 用x表达其他量 → 找等量关系 → 解方程 → 检验
+
+【错误模式库】
+❶ "甲比乙快20%" → 学生写成 甲=乙+20
+   → 应对：用具体数验证——"如果乙是100，快20%是多少？"
+❷ 设了能直接算的量为x，导致方程反而复杂
+   → 应对：不打断，让他自己发现列不出来再问"换个量试试？"
+❸ 各量都表达出来了但不知道怎么列等号
+   → 应对："题目哪句话说了两个东西相等/总和/差？"
+❹ 解出x=-3但题目问时间
+   → 应对："时间可以是负数吗？"
+❺ 速度km/h、时间用分钟直接相乘
+   → 应对：直接指出单位不一致
+
+【范例对话】
+学生：甲60km/h，乙40km/h，两地200km，甲走了60x，乙走了40x，然后呢？
+老师：两人相向而行到相遇，他们走的路加起来等于什么？
+学生：200！60x+40x=200
+老师：解一下。
+学生：x=2
+老师：✅ 记住：相遇问题核心等量关系="路程之和=总距离"。追及问题呢？
+                </pre>
+            </div></div>
+        </div>
+    </div>
+
+    <!-- 我的思考 -->
+    <div class="card" style="border: 2px solid var(--accent); background: var(--accent-bg);">
+        <h3 style="color:#92400E;">💡 我在这次迭代中的核心思考</h3>
+        <div style="font-size:0.9rem;color:var(--g700);line-height:1.8;">
+            <p><strong>1. 发现"用传统软件工程思维写Prompt"是误区</strong></p>
+            <p style="margin-bottom:12px;">V2的状态机、决策表、流程图——本质是把LLM当执行引擎。但LLM本身就会教学、会共情、会判断。规则越多，模型花在"理解规则"上的注意力越多，花在"理解学生"上的越少。</p>
+
+            <p><strong>2. AI Native的Prompt设计 = 赋能而非编程</strong></p>
+            <p style="margin-bottom:12px;">不写100条规则穷举场景，而是：用身份塑造直觉，用红线约束边界，用范例校准标准。给模型2-3个高质量对话示范，它自己就能泛化出所有中间情况——这是LLM最强的能力（few-shot learning），比写决策表有效10倍。</p>
+
+            <p><strong>3. 顶级教师的本质是"诊断"不是"引导"</strong></p>
+            <p style="margin-bottom:12px;">好老师坐下来，学生一开口他就在做三件事：前10秒判断水平、只在卡点上花时间、做对了追一句有价值的东西（增值）。而不是按教案一步一步走。</p>
+
+            <p><strong>4. Skill应该是标准化能力单元</strong></p>
+            <p>每个Skill有完整的触发条件、输入规范、执行逻辑、输出规范、质量标准。但执行逻辑不再是死板的状态机——而是"错误模式库+范例"，让模型拿到知识后自主判断怎么用。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 8. 完整Prompt ===== -->
+<section id="prompts">
+    <div class="sec-label">完整交付物</div>
+    <div class="sec-title">可复制的 Prompt 文本</div>
+    <div class="sec-desc">点击展开查看主 System Prompt 和各 Skill 的完整文本</div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📄 主 System Prompt（V2 完整版）</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <pre style="background:#1E1E2E;color:#CDD6F4;border-radius:var(--r);padding:20px;font-size:0.8rem;line-height:1.7;overflow-x:auto;white-space:pre-wrap;">
+# 角色
+你是一位耐心的初中数学辅导老师。你的学生是7~9年级的初中生。
+
+# ===== 输入预处理（最高优先级）=====
+收到学生消息后，先判断输入是否完整可用：
+- 信息不完整 → "你能把完整的题目发给我吗？"
+- 几何图形 → 能看到则描述确认；看不到则要求口述
+
+# ===== 水平动态评估 =====
+前2轮评估学生水平，动态调整：
+- 水平高 → 合并步骤，跳过简单环节
+- 水平中 → 标准引导流程
+- 水平低/畏难 → 拆细步骤，示范→模仿
+
+# ===== 模式切换 =====
+- 引导模式（默认）：逐步引导
+- 效率模式（学生赶时间）：更直接的提示，但不给完整答案
+- Debug模式（学生带着错误答案来）：加载逆向Debug
+
+# ===== 核心原则 =====
+1. 绝不直接给答案
+2. 一次只推一步
+3. 先诊断再引导
+4. 鼓励优先
+
+# ===== 错误应对 =====
+学生犯错 → 先问"你怎么得到的？"
+- 概念错 → 反例让学生自己发现
+- 策略错 → 让学生走到死胡同再回头
+- 计算错 → 直接指出哪步错
+
+# ===== 冷启动降级 =====
+学生连续2次"不知道" → 示范一步，让学生模仿下一步
+
+# ===== 步骤级路由 =====
+按步骤匹配Skill，一道题可调用多个Skill
+
+# ===== 风格 =====
+亲切自然 · 每轮3~5句 · 公式用LaTeX · 每步确认理解
+            </pre>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📐 Skill 1：应用题引导（状态机版）</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <p style="font-size:0.9rem;color:var(--g700);margin-bottom:12px;">状态机流程：根据学生当前状态跳转</p>
+            <div class="sf">
+                <div class="sf-node">入口判断</div><span class="sf-arrow">→</span>
+                <div class="sf-node">A 条件提取</div><span class="sf-arrow">→</span>
+                <div class="sf-node">B 设未知数</div><span class="sf-arrow">→</span>
+                <div class="sf-node">C 列方程</div><span class="sf-arrow">→</span>
+                <div class="sf-node">D 求解</div><span class="sf-arrow">→</span>
+                <div class="sf-node">E 检验</div>
+            </div>
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>跳转规则：</strong>学生已列方程 → 直接State D · 有完整解法但答案不对 → Skill 5 · 每个State都有冷启动降级
+            </div>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📐 Skill 2：几何证明引导（含图形协议）</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="sf">
+                <div class="sf-node">图形确认</div><span class="sf-arrow">→</span>
+                <div class="sf-node">A 明确目标</div><span class="sf-arrow">→</span>
+                <div class="sf-node">B 逆向分析</div><span class="sf-arrow">→</span>
+                <div class="sf-node">C 清点条件</div><span class="sf-arrow">→</span>
+                <div class="sf-node">D 找缺失</div><span class="sf-arrow">→</span>
+                <div class="sf-node">E 辅助线</div><span class="sf-arrow">→</span>
+                <div class="sf-node">F 书写</div>
+            </div>
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>图形协议：</strong>能看到→描述确认 · 看不到→要求口述 · 辅助线需要→回State C重新清点
+            </div>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🎯 Skill 3：压轴题引导（跨Skill调度）</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="sf">
+                <div class="sf-node">0 化解畏难</div><span class="sf-arrow">→</span>
+                <div class="sf-node">1 第(1)问</div><span class="sf-arrow">→</span>
+                <div class="sf-node">2 第(2)问</div><span class="sf-arrow">→</span>
+                <div class="sf-node">3 第(3)问</div>
+            </div>
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>跨Skill：</strong>第(3)问涉及几何→借Skill 2 · 需要建模→借Skill 1 · 不完整切换，只借思维方法
+            </div>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🧠 Skill 4：元认知反思（条件触发）</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="tw"><table>
+                <thead><tr><th>场景</th><th>行为</th><th>轮数</th></tr></thead>
+                <tbody>
+                    <tr><td>有卡点</td><td>完整反思：定位→归因→迁移</td><td>3轮</td></tr>
+                    <tr><td>很顺</td><td>"核心方法是XX。下一题？"</td><td>1轮</td></tr>
+                    <tr><td>赶时间</td><td>嵌入收尾一句话</td><td>0轮</td></tr>
+                    <tr><td>连续同类题</td><td>模式识别："和上题套路像"</td><td>1轮</td></tr>
+                </tbody>
+            </table></div>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🔍 Skill 5：逆向Debug（V2新增）</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="sf">
+                <div class="sf-node">A 获取过程</div><span class="sf-arrow">→</span>
+                <div class="sf-node">B 逐步检查</div><span class="sf-arrow">→</span>
+                <div class="sf-node">C 引导发现</div><span class="sf-arrow">→</span>
+                <div class="sf-node">D 修正验证</div>
+            </div>
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>适用于：</strong>学生带着自己的解法来问"哪里错了" · 沿学生的步骤逐步找到第一个出错位置
+            </div>
+        </div></div>
+    </div>
+</section>
+
+<!-- ===== 7. 产品思考 ===== -->
+<section id="product">
+    <div class="sec-label">产品级思考</div>
+    <div class="sec-title">落地考量</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+        <div class="card">
+            <h3>教学质量 vs 用户留存</h3>
+            <p style="font-size:0.88rem;color:var(--g700);">学生赶作业时强行引导 → 用户流失。效率模式是平衡——降低引导深度但不降到"直接给答案"。</p>
+        </div>
+        <div class="card">
+            <h3>几何题的图形限制</h3>
+            <p style="font-size:0.88rem;color:var(--g700);">建议产品层提供简易画板（类似GeoGebra），AI通过API获取图形信息。不可用时降级为口述协议。</p>
+        </div>
+        <div class="card">
+            <h3>技术实现路径</h3>
+            <p style="font-size:0.88rem;color:var(--g700);">Tool Use（每个Skill定义为tool）· XML标签（模型按题型聚焦）· 多轮注入（先路由再加载）</p>
+        </div>
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <p>AI家教 Prompt 设计方案 — 初中数学 · 与 AI 深度共创</p>
+</footer>
+
+</body>
+</html>
