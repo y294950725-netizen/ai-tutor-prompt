@@ -15,1529 +15,603 @@
             --success-bg: #ECFDF5;
             --danger: #EF4444;
             --danger-bg: #FEF2F2;
-            --gray-50: #F9FAFB;
-            --gray-100: #F3F4F6;
-            --gray-200: #E5E7EB;
-            --gray-300: #D1D5DB;
-            --gray-500: #6B7280;
-            --gray-700: #374151;
-            --gray-900: #111827;
-            --radius: 12px;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+            --g50: #F9FAFB; --g100: #F3F4F6; --g200: #E5E7EB;
+            --g300: #D1D5DB; --g500: #6B7280; --g700: #374151; --g900: #111827;
+            --r: 12px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
-            color: var(--gray-900);
-            background: var(--gray-50);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif; color: var(--g900); background: var(--g50); line-height: 1.7; }
 
-        /* ===== Hero ===== */
-        .hero {
-            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #A855F7 100%);
-            color: white;
-            padding: 80px 24px 60px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-        .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
-        .hero p { font-size: 1.15rem; opacity: 0.9; margin-bottom: 24px; }
-        .hero-tags { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .hero-tag {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 6px 18px;
-            border-radius: 100px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #A855F7 100%); color: white; padding: 70px 24px 50px; text-align: center; }
+        .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .hero .sub { font-size: 1.1rem; opacity: 0.9; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); padding: 5px 16px; border-radius: 100px; font-size: 0.85rem; }
 
-        /* ===== Nav ===== */
-        .sticky-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--gray-200);
-            padding: 0 24px;
-        }
-        .sticky-nav-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            gap: 0;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-        .sticky-nav-inner::-webkit-scrollbar { display: none; }
-        .nav-item {
-            padding: 14px 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--gray-500);
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            white-space: nowrap;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-        .nav-item:hover, .nav-item.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
+        /* Layout */
+        .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 56px 0; }
+        section + section { border-top: 1px solid var(--g200); }
+        .sec-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); margin-bottom: 6px; }
+        .sec-title { font-size: 1.5rem; font-weight: 800; color: var(--g900); margin-bottom: 8px; }
+        .sec-desc { font-size: 0.95rem; color: var(--g500); margin-bottom: 28px; }
 
-        /* ===== Layout ===== */
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
-        section { margin-bottom: 60px; scroll-margin-top: 60px; }
+        /* Cards */
+        .card { background: white; border-radius: var(--r); box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 24px; margin-bottom: 16px; border: 1px solid var(--g100); }
+        .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; }
 
-        /* ===== Section Headers ===== */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-        .section-number {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            color: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-        .section-subtitle {
-            font-size: 0.95rem;
-            color: var(--gray-500);
-            margin-top: 2px;
-        }
+        /* Timeline - Compact */
+        .tl { display: grid; grid-template-columns: 1fr; gap: 0; position: relative; padding-left: 28px; margin-bottom: 8px; }
+        .tl::before { content:''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--primary), var(--accent)); }
+        .tl-step { position: relative; padding: 12px 0 20px 20px; }
+        .tl-step::before { content:''; position: absolute; left: -24px; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid var(--primary-bg); }
+        .tl-step:last-child::before { background: var(--accent); }
+        .tl-num { font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .tl-step h4 { font-size: 0.95rem; font-weight: 700; margin: 2px 0 4px; }
+        .tl-step p { font-size: 0.85rem; color: var(--g600, #4B5563); }
+        .tl-my { display: inline-block; background: var(--accent-bg); color: #92400E; font-size: 0.8rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-top: 6px; }
+        .tl-insight { background: var(--primary-bg); border-radius: 6px; padding: 8px 12px; margin-top: 6px; font-size: 0.82rem; color: var(--g700); }
+        .tl-insight::before { content: '💡 '; }
 
-        /* ===== Cards ===== */
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 28px;
-            margin-bottom: 20px;
-            border: 1px solid var(--gray-100);
-        }
-        .card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--gray-900);
-        }
-        .card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 20px 0 10px;
-            color: var(--gray-700);
-        }
-        .card p { color: var(--gray-700); margin-bottom: 12px; }
-        .card ul, .card ol { padding-left: 20px; color: var(--gray-700); margin-bottom: 12px; }
-        .card li { margin-bottom: 6px; }
+        /* 3 Highlights */
+        .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .hl-card { background: white; border-radius: var(--r); padding: 24px; border: 1px solid var(--g200); text-align: center; transition: box-shadow 0.2s; }
+        .hl-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .hl-icon { font-size: 2rem; margin-bottom: 12px; }
+        .hl-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .hl-card p { font-size: 0.85rem; color: var(--g500); line-height: 1.6; }
 
-        /* ===== Highlight Box ===== */
-        .highlight {
-            background: var(--primary-bg);
-            border-left: 4px solid var(--primary);
-            border-radius: 0 var(--radius) var(--radius) 0;
-            padding: 20px 24px;
-            margin: 20px 0;
-        }
-        .highlight.accent {
-            background: var(--accent-bg);
-            border-left-color: var(--accent);
-        }
-        .highlight.success {
-            background: var(--success-bg);
-            border-left-color: var(--success);
-        }
-        .highlight.danger {
-            background: var(--danger-bg);
-            border-left-color: var(--danger);
-        }
-        .highlight strong { color: var(--gray-900); }
+        /* Table */
+        .tw { overflow-x: auto; margin: 12px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { background: var(--g100); font-weight: 600; text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--g200); color: var(--g700); }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--g100); color: var(--g700); vertical-align: top; }
 
-        /* ===== Tables ===== */
-        .table-wrap { overflow-x: auto; margin: 16px 0; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-        th {
-            background: var(--gray-100);
-            font-weight: 600;
-            text-align: left;
-            padding: 12px 16px;
-            border-bottom: 2px solid var(--gray-200);
-            color: var(--gray-700);
-            white-space: nowrap;
-        }
-        td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--gray-100);
-            color: var(--gray-700);
-            vertical-align: top;
-        }
-        tr:hover td { background: var(--gray-50); }
+        /* Comparison */
+        .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+        .cmp-bad { background: var(--danger-bg); border: 1px solid #FECACA; border-radius: var(--r); padding: 16px; }
+        .cmp-good { background: var(--success-bg); border: 1px solid #A7F3D0; border-radius: var(--r); padding: 16px; }
+        .cmp-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+        .cmp-bad .cmp-label { color: var(--danger); }
+        .cmp-good .cmp-label { color: var(--success); }
+        .cmp-text { font-size: 0.88rem; color: var(--g700); }
 
-        /* ===== Tabs ===== */
-        .tabs { display: flex; gap: 4px; margin-bottom: 0; border-bottom: 2px solid var(--gray-200); }
-        .tab {
-            padding: 12px 24px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--gray-500);
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.2s;
-            background: none;
-            border-top: none;
-            border-left: none;
-            border-right: none;
-        }
-        .tab:hover { color: var(--primary); }
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        /* Chat */
+        .chat { background: var(--g100); border-radius: var(--r); padding: 20px; margin: 14px 0; }
+        .bubble { max-width: 85%; padding: 10px 14px; border-radius: 14px; margin-bottom: 10px; font-size: 0.88rem; line-height: 1.6; }
+        .b-teacher { background: var(--primary); color: white; border-bottom-left-radius: 4px; }
+        .b-student { background: white; color: var(--g700); border-bottom-right-radius: 4px; margin-left: auto; }
+        .b-label { font-size: 0.72rem; font-weight: 600; color: var(--g500); margin-bottom: 3px; }
+        .b-label-r { text-align: right; }
 
-        /* ===== Collapsible ===== */
-        .collapsible {
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            margin-bottom: 12px;
-            overflow: hidden;
-            background: white;
-        }
-        .collapsible-header {
-            padding: 16px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--gray-900);
-            transition: background 0.2s;
-            user-select: none;
-        }
-        .collapsible-header:hover { background: var(--gray-50); }
-        .collapsible-header .arrow {
-            transition: transform 0.3s;
-            font-size: 0.8rem;
-            color: var(--gray-400);
-        }
-        .collapsible.open .collapsible-header .arrow { transform: rotate(180deg); }
-        .collapsible-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-        .collapsible.open .collapsible-body { max-height: 3000px; }
-        .collapsible-body-inner { padding: 0 20px 20px; }
+        /* Architecture */
+        .arch { background: white; border: 2px solid var(--primary-light); border-radius: var(--r); padding: 28px; text-align: center; font-family: 'SF Mono', 'JetBrains Mono', monospace; font-size: 0.78rem; white-space: pre; overflow-x: auto; color: var(--g700); line-height: 1.5; }
 
-        /* ===== Code Block ===== */
-        .code-block {
-            background: #1E1E2E;
-            color: #CDD6F4;
-            border-radius: var(--radius);
-            padding: 24px;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.85rem;
-            line-height: 1.8;
-            overflow-x: auto;
-            margin: 16px 0;
-            position: relative;
-        }
-        .code-block .comment { color: #6C7086; }
-        .code-block .keyword { color: #CBA6F7; }
-        .code-block .string { color: #A6E3A1; }
-        .code-block .highlight-line { color: #F9E2AF; }
+        /* Issue Grid */
+        .issues { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+        .iss { background: white; border: 1px solid var(--g200); border-radius: var(--r); padding: 16px; }
+        .iss-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--danger-bg); color: var(--danger); border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 6px; }
+        .iss-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; }
+        .iss-fix { font-size: 0.82rem; color: var(--success); font-weight: 600; }
 
-        /* ===== Comparison ===== */
-        .comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin: 16px 0;
-        }
-        .comparison-bad {
-            background: var(--danger-bg);
-            border: 1px solid #FECACA;
-            border-radius: var(--radius);
-            padding: 20px;
-        }
-        .comparison-good {
-            background: var(--success-bg);
-            border: 1px solid #A7F3D0;
-            border-radius: var(--radius);
-            padding: 20px;
-        }
-        .comparison-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-        .comparison-bad .comparison-label { color: var(--danger); }
-        .comparison-good .comparison-label { color: var(--success); }
-        .comparison-text { font-size: 0.9rem; color: var(--gray-700); line-height: 1.6; }
-
-        /* ===== Architecture Diagram ===== */
-        .arch-diagram {
-            background: white;
-            border: 2px solid var(--primary-light);
-            border-radius: var(--radius);
-            padding: 32px;
-            text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            line-height: 1.6;
-            white-space: pre;
-            overflow-x: auto;
-            margin: 20px 0;
-            color: var(--gray-700);
-        }
-
-        /* ===== Badge ===== */
-        .badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .badge-purple { background: #EDE9FE; color: #7C3AED; }
+        /* Badge */
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 0.72rem; font-weight: 600; }
+        .badge-red { background: #FECACA; color: #DC2626; }
+        .badge-orange { background: #FED7AA; color: #C2410C; }
         .badge-blue { background: #DBEAFE; color: #2563EB; }
         .badge-green { background: #D1FAE5; color: #059669; }
-        .badge-orange { background: #FED7AA; color: #C2410C; }
-        .badge-red { background: #FECACA; color: #DC2626; }
 
-        /* ===== Stat Cards ===== */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
-        }
-        .stat-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            text-align: center;
-            border: 1px solid var(--gray-200);
-        }
-        .stat-number { font-size: 2rem; font-weight: 800; color: var(--primary); }
-        .stat-label { font-size: 0.85rem; color: var(--gray-500); margin-top: 4px; }
+        /* Collapsible */
+        .coll { border: 1px solid var(--g200); border-radius: var(--r); margin-bottom: 10px; overflow: hidden; background: white; }
+        .coll-h { padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.92rem; user-select: none; }
+        .coll-h:hover { background: var(--g50); }
+        .coll-h .arr { transition: transform 0.3s; font-size: 0.75rem; color: var(--g300); }
+        .coll.open .coll-h .arr { transform: rotate(180deg); }
+        .coll-b { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .coll.open .coll-b { max-height: 5000px; }
+        .coll-inner { padding: 0 18px 18px; }
 
-        /* ===== Issue Card ===== */
-        .issue-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
-        }
-        .issue-card {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            padding: 20px;
-            transition: box-shadow 0.2s;
-        }
-        .issue-card:hover { box-shadow: var(--shadow-lg); }
-        .issue-number {
-            width: 28px;
-            height: 28px;
-            background: var(--danger-bg);
-            color: var(--danger);
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-        }
-        .issue-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
-        .issue-solution { font-size: 0.85rem; color: var(--gray-500); }
-        .issue-solution strong { color: var(--success); }
+        /* Highlight box */
+        .hbox { border-left: 4px solid var(--primary); background: var(--primary-bg); border-radius: 0 var(--r) var(--r) 0; padding: 14px 18px; margin: 14px 0; font-size: 0.9rem; }
+        .hbox.accent { border-left-color: var(--accent); background: var(--accent-bg); }
+        .hbox.success { border-left-color: var(--success); background: var(--success-bg); }
 
-        /* ===== Skill Card ===== */
-        .skill-card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--gray-100);
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-        .skill-header {
-            padding: 20px 28px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 1px solid var(--gray-100);
-        }
-        .skill-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-        .skill-header h3 { margin: 0; font-size: 1.1rem; }
-        .skill-header p { margin: 0; font-size: 0.85rem; color: var(--gray-500); }
-        .skill-body { padding: 24px 28px; }
+        /* State flow compact */
+        .sf { display: flex; align-items: center; gap: 0; margin: 16px 0; flex-wrap: wrap; }
+        .sf-node { background: var(--primary-bg); border: 1px solid var(--primary-light); border-radius: 8px; padding: 8px 14px; font-size: 0.82rem; font-weight: 600; color: var(--primary); text-align: center; }
+        .sf-arrow { color: var(--g300); font-size: 0.8rem; padding: 0 6px; }
 
-        /* ===== State Machine ===== */
-        .state-flow {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            margin: 16px 0;
-        }
-        .state-item {
-            display: flex;
-            gap: 16px;
-            position: relative;
-        }
-        .state-line {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 32px;
-            flex-shrink: 0;
-        }
-        .state-dot {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.75rem;
-            flex-shrink: 0;
-        }
-        .state-connector {
-            width: 2px;
-            flex-grow: 1;
-            background: var(--gray-200);
-            min-height: 16px;
-        }
-        .state-content {
-            flex: 1;
-            padding-bottom: 20px;
-        }
-        .state-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
-        .state-desc { font-size: 0.9rem; color: var(--gray-700); }
-        .state-cold {
-            background: #FEF3C7;
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 0.85rem;
-            margin-top: 8px;
-            color: #92400E;
-        }
-        .state-cold::before { content: '❄️ 冷启动降级：'; font-weight: 600; }
+        /* Footer */
+        footer { background: var(--g900); color: var(--g300); padding: 32px 24px; text-align: center; font-size: 0.85rem; }
 
-        /* ===== Chat Demo ===== */
-        .chat-demo {
-            background: var(--gray-100);
-            border-radius: var(--radius);
-            padding: 24px;
-            margin: 16px 0;
-        }
-        .chat-bubble {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        .chat-teacher {
-            background: var(--primary);
-            color: white;
-            border-bottom-left-radius: 4px;
-            margin-right: auto;
-        }
-        .chat-student {
-            background: white;
-            color: var(--gray-700);
-            border-bottom-right-radius: 4px;
-            margin-left: auto;
-        }
-        .chat-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--gray-500);
-        }
-        .chat-label-right { text-align: right; }
-
-        /* ===== Footer ===== */
-        footer {
-            background: var(--gray-900);
-            color: var(--gray-300);
-            padding: 40px 24px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-        footer a { color: var(--primary-light); text-decoration: none; }
-
-        /* ===== Timeline ===== */
-        .timeline { position: relative; padding-left: 40px; margin: 24px 0; }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--primary), var(--primary-light), var(--accent));
-        }
-        .tl-item { position: relative; margin-bottom: 32px; }
-        .tl-dot {
-            position: absolute;
-            left: -33px;
-            top: 4px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: 3px solid var(--primary-bg);
-            box-shadow: 0 0 0 2px var(--primary);
-        }
-        .tl-item:last-child .tl-dot { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-        .tl-phase {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-        .tl-title { font-size: 1.05rem; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
-        .tl-desc { font-size: 0.9rem; color: var(--gray-600); line-height: 1.7; }
-        .tl-quote {
-            background: var(--gray-100);
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: var(--gray-700);
-            border-left: 3px solid var(--primary-light);
-        }
-        .tl-quote-me { border-left-color: var(--accent); }
-        .tl-speaker {
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .tl-speaker-ai { color: var(--primary); }
-        .tl-speaker-me { color: var(--accent); }
-        .tl-insight {
-            background: linear-gradient(135deg, var(--primary-bg), #F5F3FF);
-            border: 1px solid var(--primary-light);
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-        }
-        .tl-insight::before { content: '💡 '; }
-        .tl-arrow {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: var(--success);
-            font-weight: 600;
-        }
-        .tl-arrow::before { content: '→'; }
-
-        /* ===== Responsive ===== */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 1.8rem; }
-            .comparison { grid-template-columns: 1fr; }
-            .issue-grid { grid-template-columns: 1fr; }
-            .stats { grid-template-columns: 1fr 1fr; }
-            .card { padding: 20px; }
+            .hero h1 { font-size: 1.7rem; }
+            .highlights { grid-template-columns: 1fr; }
+            .cmp { grid-template-columns: 1fr; }
+            .issues { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<!-- Hero -->
+<!-- ===== HERO ===== -->
 <div class="hero">
-    <div class="hero-content">
-        <h1>AI家教 Prompt 设计方案</h1>
-        <p>让大模型变身"优秀辅导老师"——初中数学 Skill 按需加载架构</p>
-        <div class="hero-tags">
-            <span class="hero-tag">初中数学 7~9年级</span>
-            <span class="hero-tag">3大题型深度解构</span>
-            <span class="hero-tag">5个Skill模块</span>
-            <span class="hero-tag">10个真实问题修复</span>
-        </div>
+    <h1>AI家教 Prompt 设计方案</h1>
+    <p class="sub">让大模型变身"优秀辅导老师" · 初中数学 · Skill 按需加载架构</p>
+    <div class="hero-tags">
+        <span class="hero-tag">初中数学 7~9年级</span>
+        <span class="hero-tag">3题型 × 5层深度</span>
+        <span class="hero-tag">5个Skill模块</span>
+        <span class="hero-tag">10个问题修复 · V2</span>
     </div>
 </div>
 
-<!-- Sticky Nav -->
-<div class="sticky-nav">
-    <div class="sticky-nav-inner">
-        <a class="nav-item active" href="#process">设计过程</a>
-        <a class="nav-item" href="#design">设计理念</a>
-        <a class="nav-item" href="#module1">模块一：场景解构</a>
-        <a class="nav-item" href="#module2">模块二：Prompt架构</a>
-        <a class="nav-item" href="#problems">10个真实问题</a>
-        <a class="nav-item" href="#skills">5个Skill详解</a>
-        <a class="nav-item" href="#module3">模块三：实测</a>
-    </div>
-</div>
+<div class="wrap">
 
-<div class="container">
-
-<!-- ===== 设计过程 ===== -->
+<!-- ===== 1. 设计过程 ===== -->
 <section id="process">
-    <div class="section-header">
-        <div class="section-number" style="background:linear-gradient(135deg,var(--primary),var(--accent));">⚡</div>
-        <div>
-            <div class="section-title">设计过程：从构思到落地</div>
-            <div class="section-subtitle">全程与 AI 深度共创，6轮关键迭代，每一步都有思考</div>
+    <div class="sec-label">从构思到落地</div>
+    <div class="sec-title">设计过程：6轮迭代</div>
+    <div class="sec-desc">全程与 AI 深度共创。不是"让 AI 写一个 Prompt"，而是通过反复质疑、模拟、发现问题、迭代。</div>
+
+    <div class="tl">
+        <div class="tl-step">
+            <div class="tl-num">第一轮 · 定方向</div>
+            <h4>选初中数学，聚焦3个题型做极致</h4>
+            <p>选择应用题+几何证明+压轴题——简单→中等→困难的梯度，且每个需要完全不同的辅导策略，能充分展示方案的差异化。</p>
+            <div class="tl-my">我的判断：3个题型深挖 > 6个题型浅覆盖</div>
         </div>
-    </div>
-
-    <div class="highlight accent">
-        <strong>阅读指南：</strong>本板块还原了我与 AI 共创这套方案的完整思考路径。不是"让 AI 写一个 Prompt"，而是<strong>通过反复质疑、模拟、发现问题、迭代</strong>，最终得到一个经得起真实场景检验的设计。
-    </div>
-
-    <div class="timeline">
-
-        <!-- Round 1 -->
-        <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-phase">第一轮 · 定方向</div>
-            <div class="tl-title">选什么学科？聚焦多少题型？</div>
-            <div class="tl-desc">面对5个学科的选择，我的判断是——初中数学题型结构化程度高，引导策略容易拆解，面试官也容易评判效果。</div>
-            <div class="tl-quote tl-quote-me">
-                <div class="tl-speaker tl-speaker-me">我的决策</div>
-                选初中数学，不求广度覆盖6个题型，而是<strong>聚焦3个题型做到极致</strong>。选应用题+几何证明+压轴题——简单→中等→困难的梯度，且每个需要完全不同的辅导策略。
-            </div>
-            <div class="tl-insight">3个题型的组合逻辑：不是随便选的，而是为了展示"不同题型需要不同引导策略"这个核心论点。如果3个题型用同一套策略就能搞定，那方案就没有说服力。</div>
+        <div class="tl-step">
+            <div class="tl-num">第二轮 · 定深度</div>
+            <h4>每个题型拆成"四层深度结构"</h4>
+            <p>场景画像 → 学生卡点图谱 → 辅导策略流 → 好辅导vs坏辅导对比。关键洞察：学生不是笼统的"不会"，而是卡在具体的某一步。</p>
         </div>
-
-        <!-- Round 2 -->
-        <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-phase">第二轮 · 定深度</div>
-            <div class="tl-title">每个题型要深挖到什么程度？</div>
-            <div class="tl-desc">我和 AI 讨论出了四层深度结构：场景画像 → 学生卡点图谱 → 辅导策略流 → 好辅导vs坏辅导对比。</div>
-            <div class="tl-quote tl-quote-me">
-                <div class="tl-speaker tl-speaker-me">我的思考</div>
-                大部分方案只列题型和策略，但不说"学生具体在哪一步卡住"。比如应用题，学生不是"不会列方程"这么笼统——而是可能卡在<strong>条件提取、设未知数、找等量关系、检验答案</strong>四个完全不同的环节，每个环节需要不同的引导。这个粒度才是有价值的。
-            </div>
-            <div class="tl-arrow">产出：模块一初版——三题型×四层深度解构</div>
+        <div class="tl-step">
+            <div class="tl-num">第三轮 · 加机制</div>
+            <h4>引入"错误分类"和"元认知训练"</h4>
+            <p>AI 提供了4个升级方向。我筛选了2个——错误分类系统和元认知训练，因为这两个最有区分度，市面上没有 Prompt 方案做到。</p>
+            <div class="tl-my">我的筛选：认知科学太学术，迁移训练可并入元认知。选能落地的。</div>
         </div>
-
-        <!-- Round 3 -->
-        <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-phase">第三轮 · 加深度</div>
-            <div class="tl-title">有没有更极致的教学方案？</div>
-            <div class="tl-desc">初版完成后，我主动质疑：当前方案只是"标准好老师"的水平，能不能做到更极致？</div>
-            <div class="tl-quote">
-                <div class="tl-speaker tl-speaker-ai">AI 提供的维度</div>
-                4个升级方向：认知科学驱动、错误分类系统、元认知训练、迁移与模式识别。
-            </div>
-            <div class="tl-quote tl-quote-me">
-                <div class="tl-speaker tl-speaker-me">我的筛选</div>
-                4个都加太散了。我选了<strong>错误分类系统</strong>和<strong>元认知训练</strong>——这两个最能让面试官眼前一亮，因为市面上几乎没有 Prompt 方案做到这个层次。认知科学理论太学术，迁移训练可以放在元认知里。
-            </div>
-            <div class="tl-insight">
-                错误分类的核心洞察：对计算错误做苏格拉底式提问是浪费时间（"你觉得3+5等于几？"），对概念错误直接纠正则失去了最佳学习机会。<strong>精准分类→精准应对</strong>，这才是"像真人老师"的关键。
-            </div>
+        <div class="tl-step">
+            <div class="tl-num">第四轮 · 质疑架构 ⭐</div>
+            <h4>"一个大 Prompt 塞这么多东西，能执行吗？"</h4>
+            <p>写完初版 System Prompt 后我主动质疑——指令太多模型顾此失彼。于是提出 Skill 按需加载架构，把"写Prompt"升级为"设计Prompt系统"。</p>
+            <div class="tl-insight">这是最关键的转折。从 Prompt → Prompt Architecture。</div>
         </div>
-
-        <!-- Round 4 -->
-        <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-phase">第四轮 · 质疑架构</div>
-            <div class="tl-title">一套 Prompt 塞这么多东西，真的能执行吗？</div>
-            <div class="tl-desc">写完模块二初版后，我提出了一个关键质疑——</div>
-            <div class="tl-quote tl-quote-me">
-                <div class="tl-speaker tl-speaker-me">我的质疑</div>
-                "一套提示词，做这个架构，是不是有点困难。" 角色设定+3套题型策略+错误分类+元认知+风格规范+兜底机制…全塞进一个 System Prompt，指令太多模型顾此失彼。
-            </div>
-            <div class="tl-quote tl-quote-me">
-                <div class="tl-speaker tl-speaker-me">我的解法</div>
-                "是不是可以写成 Skill 的形式，按需加载？" 于是整个架构从"一个大 Prompt"重构为<strong>主Prompt + 5个Skill按需加载</strong>的模块化架构。
-            </div>
-            <div class="tl-insight">这是整个设计过程中最关键的一次转折。从"写Prompt"升级到了"设计Prompt架构"——面试官看到这一步会知道候选人不只会写提示词，还懂模型的执行边界。</div>
-            <div class="tl-arrow">产出：Skill 按需加载架构 V1</div>
+        <div class="tl-step">
+            <div class="tl-num">第五轮 · 压力测试 ⭐</div>
+            <h4>模拟真实用户，找出10个结构性问题</h4>
+            <p>没有直接交付，而是模拟初中生晚上写作业的场景，走完整个引导流程。发现学生说"不知道"时引导卡死、几何题AI看不见图、学生赶作业不想被引导等10个真实问题。</p>
+            <div class="tl-my">我的做法：主动找问题，而不是写完就交</div>
         </div>
-
-        <!-- Round 5 -->
-        <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-phase">第五轮 · 压力测试</div>
-            <div class="tl-title">模拟真实用户，发现了10个结构性问题</div>
-            <div class="tl-desc">架构设计完后，我没有直接交付，而是做了一件关键的事——<strong>模拟一个真实初中生晚上写作业的场景</strong>，逐步走完整个 Prompt 的引导流程。</div>
-            <div class="tl-quote tl-quote-me">
-                <div class="tl-speaker tl-speaker-me">我的发现</div>
-                "站在真实用户视角上，还有哪些问题？" 一口气找出了10个结构性缺陷：
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">①</strong> 学生说"不知道"时引导链卡死
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">②</strong> 错误分类边界模糊执行不了
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">③</strong> 线性引导链不适配跳步学生
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">④</strong> 元认知反思变成机械仪式
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">⑤</strong> 几何题 AI 看不见图
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">⑥</strong> 学生赶作业不想被引导
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">⑦</strong> 学生带着错误答案来 debug
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">⑧</strong> 输入残缺/模糊/口语化
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">⑨</strong> 一道题横跨多个题型
-                </div>
-                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
-                    <strong style="color:var(--danger);">⑩</strong> 不同水平学生需要不同粒度
-                </div>
-            </div>
-            <div class="tl-insight">这一步是方案的核心竞争力。大部分候选人写完 Prompt 就交了。我选择主动找问题——因为一个没经过压力测试的 Prompt 方案，在面试官眼里就是纸上谈兵。</div>
-        </div>
-
-        <!-- Round 6 -->
-        <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-phase">第六轮 · 重构升级</div>
-            <div class="tl-title">V1 → V2：10个问题全部修复</div>
-            <div class="tl-desc">把10个问题逐一解决，产出了 V2 版本——</div>
-            <div style="margin-top:12px;">
-                <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                    <span class="badge badge-green">✓ 冷启动降级</span>
-                    <span class="badge badge-green">✓ 追问澄清优先</span>
-                    <span class="badge badge-green">✓ 线性→状态机</span>
-                    <span class="badge badge-green">✓ 元认知条件触发</span>
-                    <span class="badge badge-green">✓ 图形口述协议</span>
-                    <span class="badge badge-green">✓ 效率模式</span>
-                    <span class="badge badge-green">✓ 新增逆向Debug</span>
-                    <span class="badge badge-green">✓ 输入预处理</span>
-                    <span class="badge badge-green">✓ 步骤级路由</span>
-                    <span class="badge badge-green">✓ 水平动态评估</span>
-                </div>
-            </div>
-            <div class="tl-arrow">产出：完整 V2 架构——主Prompt + 5个Skill，全部状态机化</div>
-        </div>
-
-    </div>
-
-    <div class="card" style="background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid var(--primary-light);">
-        <h3 style="color:var(--primary);">设计过程的核心逻辑</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:12px;">
-            <div style="text-align:center;padding:12px;">
-                <div style="font-size:1.5rem;margin-bottom:8px;">🎯</div>
-                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">选择 > 覆盖</div>
-                <div style="font-size:0.82rem;color:var(--gray-500);">3个题型做极致<br>比6个题型做浅有价值</div>
-            </div>
-            <div style="text-align:center;padding:12px;">
-                <div style="font-size:1.5rem;margin-bottom:8px;">🔍</div>
-                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">质疑 > 执行</div>
-                <div style="font-size:0.82rem;color:var(--gray-500);">每写完一版就质疑<br>"真实场景下能用吗？"</div>
-            </div>
-            <div style="text-align:center;padding:12px;">
-                <div style="font-size:1.5rem;margin-bottom:8px;">🏗️</div>
-                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">架构 > 堆砌</div>
-                <div style="font-size:0.82rem;color:var(--gray-500);">发现大Prompt不可行<br>主动提出Skill模块化</div>
-            </div>
-            <div style="text-align:center;padding:12px;">
-                <div style="font-size:1.5rem;margin-bottom:8px;">🧪</div>
-                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">测试 > 交付</div>
-                <div style="font-size:0.82rem;color:var(--gray-500);">主动模拟找出10个问题<br>而不是写完就交</div>
-            </div>
+        <div class="tl-step">
+            <div class="tl-num">第六轮 · 全部修复</div>
+            <h4>V1 → V2：线性流程→状态机，新增逆向Debug等</h4>
+            <p>10个问题逐一修复。引导链改为状态机、加入冷启动降级、效率模式、步骤级路由、水平动态评估。</p>
         </div>
     </div>
 </section>
 
-<!-- ===== 设计理念 ===== -->
-<section id="design">
-    <div class="section-header">
-        <div class="section-number">0</div>
-        <div>
-            <div class="section-title">设计理念</div>
-            <div class="section-subtitle">为什么通用大模型不能直接当老师</div>
+<!-- ===== 2. 三个核心亮点 ===== -->
+<section id="highlights">
+    <div class="sec-label">方案核心</div>
+    <div class="sec-title">三个创新点</div>
+    <div class="sec-desc">这套方案区别于"写一个 System Prompt"的三个关键差异</div>
+
+    <div class="highlights">
+        <div class="hl-card">
+            <div class="hl-icon">🎯</div>
+            <h3>错误分类系统</h3>
+            <p>概念错 → 用反例让学生自己发现<br>策略错 → 让学生走到死胡同<br>计算错 → 直接指出哪步错<br><strong>精准分类 = 精准应对</strong></p>
+        </div>
+        <div class="hl-card">
+            <div class="hl-icon">🧠</div>
+            <h3>元认知训练</h3>
+            <p>做完题不只是总结答案<br>而是引导学生自问：<br>"我卡在哪？为什么卡？<br>下次怎么办？"<br><strong>教"怎么思考"</strong></p>
+        </div>
+        <div class="hl-card">
+            <div class="hl-icon">🏗️</div>
+            <h3>Skill 按需加载</h3>
+            <p>不把所有规则塞进一个 Prompt<br>主Prompt负责路由<br>题型策略按需注入<br><strong>从Prompt到Architecture</strong></p>
         </div>
     </div>
+</section>
 
-    <div class="highlight">
-        <strong>核心洞察：</strong>初中数学辅导的核心矛盾是——学生缺的不是知识点，而是<strong>"从题目到解法"的思维过程</strong>。通用大模型最大的问题就在于跳过了这个过程，直接输出完整解题步骤。
-    </div>
+<!-- ===== 3. 深度样例 ===== -->
+<section id="example">
+    <div class="sec-label">深度展示</div>
+    <div class="sec-title">应用题：完整引导链示例</div>
+    <div class="sec-desc">以应用题为例，展示从卡点分析到引导策略到错误分类的完整深度</div>
 
-    <div class="stats">
-        <div class="stat-card">
-            <div class="stat-number">3</div>
-            <div class="stat-label">聚焦题型</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">5</div>
-            <div class="stat-label">Skill 模块</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">10</div>
-            <div class="stat-label">真实问题修复</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">V2</div>
-            <div class="stat-label">迭代版本</div>
-        </div>
-    </div>
-
+    <!-- 卡点图谱 -->
     <div class="card">
-        <h3>两大创新机制</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;">
-            <div style="background:var(--primary-bg);border-radius:var(--radius);padding:20px;">
-                <div style="font-weight:700;color:var(--primary);margin-bottom:8px;">机制一：错误分类系统</div>
-                <p style="font-size:0.9rem;">不同类型的错误需要完全不同的应对——概念错用反例、策略错让学生走到死胡同、计算错直接指出。精准分类 → 精准应对，这才是"像真人老师"的关键。</p>
-            </div>
-            <div style="background:var(--accent-bg);border-radius:var(--radius);padding:20px;">
-                <div style="font-weight:700;color:var(--accent);margin-bottom:8px;">机制二：元认知训练</div>
-                <p style="font-size:0.9rem;">传统辅导教"怎么做题"，我们教"怎么思考"。做完题后引导学生定位卡点、归因分析、迁移策略——让学生从"被动接受引导"转向"主动监控自己的思维过程"。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>错误分类对照表</h3>
-        <div class="table-wrap">
+        <h3>学生卡点图谱</h3>
+        <div class="tw">
             <table>
-                <thead>
-                    <tr>
-                        <th>错误类型</th>
-                        <th>典型例子</th>
-                        <th>应对策略</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>卡点</th><th>表现</th><th>根因</th><th>占比</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>条件提取</strong></td><td>"甲比乙快20%"不会转化为数学表达</td><td>自然语言→数学语言翻译能力弱</td><td>~30%</td></tr>
+                    <tr><td><strong>设未知数</strong></td><td>不知道设谁为x</td><td>缺乏"用x串联所有量"的意识</td><td>~25%</td></tr>
+                    <tr><td><strong>找等量关系</strong></td><td>条件提取了但列不出方程</td><td>不理解方程=两个表达式相等</td><td>~30%</td></tr>
+                    <tr><td><strong>检验答案</strong></td><td>解出x=−3不检查合理性</td><td>缺乏自检习惯</td><td>~15%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 好坏对比 -->
+    <div class="card">
+        <h3>好辅导 vs 坏辅导</h3>
+        <div class="cmp">
+            <div class="cmp-bad">
+                <div class="cmp-label">❌ 通用大模型的回答</div>
+                <div class="cmp-text">"设乙的速度为x km/h，则甲的速度为1.2x km/h，由题意得方程..."<br><br>→ 直接跳过了学生最需要学会的思维过程</div>
+            </div>
+            <div class="cmp-good">
+                <div class="cmp-label">✅ 我们的AI家教</div>
+                <div class="cmp-text">"这道题里出现了甲和乙两个人，他们各自有什么信息？我们先整理一下。"<br><br>→ 引导学生自己提取条件，建立思维框架</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引导对话示例 -->
+    <div class="card">
+        <h3>引导对话示例：学生在"设未知数"卡住</h3>
+        <div class="chat">
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">很好，你已经整理出了甲和乙的速度、时间、路程。现在这些量里面，哪个是题目问你求的？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">emmm...不知道设什么</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#FEF3C7;color:#92400E;padding:1px 6px;border-radius:4px;font-size:0.7rem;">冷启动降级触发</span></div>
+            <div class="bubble b-teacher">没关系。题目问的是"AB两地距离"——这个你现在不知道对吧？那我们就设它为x。你觉得行吗？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">好，设距离为x...但甲走了40千米，那乙走了多少？</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">你自己说出来了！甲走了40千米，总距离是x，那乙走了多少？用x表示试试。</div>
+        </div>
+    </div>
+
+    <!-- 错误分类实战 -->
+    <div class="card">
+        <h3>错误分类实战：三种错误三种应对</h3>
+        <div class="tw">
+            <table>
+                <thead><tr><th>类型</th><th>学生的错误</th><th>AI的应对</th></tr></thead>
                 <tbody>
                     <tr>
-                        <td><span class="badge badge-red">概念性错误</span></td>
-                        <td>以为"多20%"是"+20"</td>
-                        <td><strong>不纠正</strong>，用反例让学生自己发现矛盾</td>
+                        <td><span class="badge badge-red">概念错</span></td>
+                        <td>"1.5倍"写成"+1.5"</td>
+                        <td><strong>用反例：</strong>"如果乙=10，1.5倍是15，+1.5是11.5，哪个对？"</td>
                     </tr>
                     <tr>
-                        <td><span class="badge badge-orange">策略性错误</span></td>
-                        <td>设了错误的未知数</td>
-                        <td><strong>不马上指出</strong>，让学生走到死胡同再回头</td>
+                        <td><span class="badge badge-orange">策略错</span></td>
+                        <td>设路程为x，后续表达困难</td>
+                        <td><strong>让学生走：</strong>走不动时才问"换个量设x更方便？"</td>
                     </tr>
                     <tr>
-                        <td><span class="badge badge-blue">计算性错误</span></td>
-                        <td>移项变号出错</td>
-                        <td><strong>直接指出</strong>具体哪一步算错</td>
+                        <td><span class="badge badge-blue">计算错</span></td>
+                        <td>通分时分子算错</td>
+                        <td><strong>直接指出：</strong>"方程列得好，通分那步再算一遍。"</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</section>
 
-<!-- ===== 模块一 ===== -->
-<section id="module1">
-    <div class="section-header">
-        <div class="section-number">1</div>
-        <div>
-            <div class="section-title">模块一：学科场景解构</div>
-            <div class="section-subtitle">三大题型 × 五层深度解构</div>
-        </div>
-    </div>
-
-    <!-- 题型切换 -->
-    <div class="tabs" id="type-tabs">
-        <button class="tab active" data-tab="app">应用题</button>
-        <button class="tab" data-tab="geo">几何证明</button>
-        <button class="tab" data-tab="quad">压轴题</button>
-    </div>
-
-    <!-- 应用题 -->
-    <div class="tab-content active" id="tab-app">
-        <div class="card" style="border-top-left-radius:0;border-top-right-radius:0;">
-            <h3>应用题（行程 / 工程 / 利润）</h3>
-            <div class="highlight">
-                <strong>场景画像：</strong>文字描述 → 数学建模 → 求解 → 还原。考察的核心能力不是计算，而是<strong>数学建模能力</strong>。
-            </div>
-
-            <h4>学生卡点图谱</h4>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>编号</th><th>卡点</th><th>具体表现</th><th>深层根因</th><th>占比</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>A1</strong></td><td>条件提取障碍</td><td>"甲比乙快20%"不会写成数学表达</td><td>自然语言→数学语言的翻译能力弱</td><td>~30%</td></tr>
-                        <tr><td><strong>A2</strong></td><td>设未知数困难</td><td>不知道设谁为x</td><td>缺乏"用x串联所有量"的意识</td><td>~25%</td></tr>
-                        <tr><td><strong>A3</strong></td><td>等量关系缺失</td><td>条件提取了但列不出方程</td><td>不理解方程的本质</td><td>~30%</td></tr>
-                        <tr><td><strong>A4</strong></td><td>检验还原薄弱</td><td>解出x=−3不检查合理性</td><td>缺乏自检习惯</td><td>~15%</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h4>好辅导 vs 坏辅导</h4>
-            <div class="comparison">
-                <div class="comparison-bad">
-                    <div class="comparison-label">❌ 坏辅导（直接输出）</div>
-                    <div class="comparison-text">"设乙的速度为x km/h，则甲的速度为1.2x km/h，由题意得方程..."</div>
-                </div>
-                <div class="comparison-good">
-                    <div class="comparison-label">✅ 好辅导（引导式）</div>
-                    <div class="comparison-text">"这道题里出现了甲和乙两个人，他们各自有什么信息？我们先整理一下。"</div>
-                </div>
-            </div>
-
-            <h4>递进式引导策略</h4>
-            <div class="collapsible open">
-                <div class="collapsible-header" onclick="toggleCollapse(this)">
-                    <span>卡点A1 — 条件提取障碍</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="collapsible-body">
-                    <div class="collapsible-body-inner">
-                        <div class="chat-demo">
-                            <div class="chat-label">引导级别1（轻推）</div>
-                            <div class="chat-bubble chat-teacher">"你先把题目读一遍，告诉我这道题里出现了哪些人/物？每个分别有什么信息？"</div>
-                            <div class="chat-label">引导级别2（脚手架）</div>
-                            <div class="chat-bubble chat-teacher">"我们画一个表格，横排写甲和乙，竖排写速度、时间、路程，你能填进去吗？"</div>
-                            <div class="chat-label">引导级别3（具体化）</div>
-                            <div class="chat-bubble chat-teacher">"'甲比乙快20%'——如果乙的速度是v，那甲的速度怎么用v表示？"</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="collapsible">
-                <div class="collapsible-header" onclick="toggleCollapse(this)">
-                    <span>卡点A2 — 设未知数困难</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="collapsible-body">
-                    <div class="collapsible-body-inner">
-                        <div class="chat-demo">
-                            <div class="chat-label">引导级别1</div>
-                            <div class="chat-bubble chat-teacher">"这些量里面，哪个是题目直接问你求的？"</div>
-                            <div class="chat-label">引导级别2</div>
-                            <div class="chat-bubble chat-teacher">"你觉得哪个量最不容易直接算出来？我们就设它为x试试。"</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="collapsible">
-                <div class="collapsible-header" onclick="toggleCollapse(this)">
-                    <span>卡点A3 — 等量关系缺失</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="collapsible-body">
-                    <div class="collapsible-body-inner">
-                        <div class="chat-demo">
-                            <div class="chat-label">引导级别1</div>
-                            <div class="chat-bubble chat-teacher">"题目里还有哪句话你没用到？那句话说的是什么关系？"</div>
-                            <div class="chat-label">引导级别2</div>
-                            <div class="chat-bubble chat-teacher">"'甲比乙早到30分钟'——这说明谁的时间长、谁的时间短？差多少？"</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h4>错误分类实战</h4>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>错误类型</th><th>学生的错误</th><th>AI的应对</th></tr></thead>
-                    <tbody>
-                        <tr><td><span class="badge badge-red">概念性</span></td><td>"甲是乙的1.5倍"写成"甲=乙+1.5"</td><td>"如果乙=10，1.5倍是15，+1.5是11.5，哪个对？"</td></tr>
-                        <tr><td><span class="badge badge-orange">策略性</span></td><td>设路程为x（后续表达困难）</td><td>让学生走，走不动时："换个量设x会不会更方便？"</td></tr>
-                        <tr><td><span class="badge badge-blue">计算性</span></td><td>通分时分子算错</td><td>"方程列得很好。通分那一步你再算一遍。"</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h4>元认知引导（做完题后）</h4>
-            <div class="chat-demo">
-                <div class="chat-label">老师</div>
-                <div class="chat-bubble chat-teacher">这道题你做完了，很棒。我想问你三个问题——<br>1. 你刚才在哪一步卡住最久？<br>2. 卡住的原因是什么？<br>3. 再遇到行程问题，你打算第一步做什么？</div>
-                <div class="chat-label chat-label-right">学生</div>
-                <div class="chat-bubble chat-student">卡在列方程那一步...我觉得是不知道用哪句话...下次先整理条件画表格？</div>
-                <div class="chat-label">老师</div>
-                <div class="chat-bubble chat-teacher">你说得对，第一步先整理条件画表格。这就是你从这道题带走的"方法"——比答案本身重要多了。</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 几何证明 -->
-    <div class="tab-content" id="tab-geo">
-        <div class="card" style="border-top-left-radius:0;border-top-right-radius:0;">
-            <h3>几何证明题（全等 / 相似三角形）</h3>
-            <div class="highlight">
-                <strong>场景画像：</strong>逻辑推理要求最高的题型。核心不是计算，而是<strong>从已知条件出发，通过严密的逻辑链到达结论</strong>。思考方向往往是逆向的。
-            </div>
-
-            <h4>学生卡点图谱</h4>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>编号</th><th>卡点</th><th>具体表现</th><th>深层根因</th><th>占比</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>G1</strong></td><td>不知道从哪入手</td><td>"这题怎么证啊？"</td><td>只会正向思考，不会逆向分析</td><td>~35%</td></tr>
-                        <tr><td><strong>G2</strong></td><td>对应元素找不全</td><td>找不齐SAS/ASA需要的三组对应</td><td>不会系统地在图中搜索</td><td>~25%</td></tr>
-                        <tr><td><strong>G3</strong></td><td>辅助线恐惧</td><td>不知道加在哪里</td><td>缺乏辅助线模式积累</td><td>~20%</td></tr>
-                        <tr><td><strong>G4</strong></td><td>书写跳步/混乱</td><td>"因为AB=CD所以全等"</td><td>不理解证明格式即逻辑</td><td>~20%</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h4>好辅导 vs 坏辅导</h4>
-            <div class="comparison">
-                <div class="comparison-bad">
-                    <div class="comparison-label">❌ 坏辅导</div>
-                    <div class="comparison-text">"作辅助线EF∥BC，由平行线性质可得∠1=∠2..."</div>
-                </div>
-                <div class="comparison-good">
-                    <div class="comparison-label">✅ 好辅导</div>
-                    <div class="comparison-text">"结论让你证什么？要证它，你需要什么中间结论？"</div>
-                </div>
-            </div>
-
-            <h4>元认知引导</h4>
-            <div class="chat-demo">
-                <div class="chat-label">老师</div>
-                <div class="chat-bubble chat-teacher">证明写完了，漂亮！问你——<br>1. 最关键的一步是哪一步？<br>2. 一开始没思路，后来怎么打开局面的？<br>3. 以后遇到证明题，你打算怎么入手？</div>
-                <div class="chat-label chat-label-right">学生</div>
-                <div class="chat-bubble chat-student">先看结论要证什么，然后倒着想需要什么条件</div>
-                <div class="chat-label">老师</div>
-                <div class="chat-bubble chat-teacher">这就是逆向分析法。记住这个思路，对所有证明题都有用。</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 压轴题 -->
-    <div class="tab-content" id="tab-quad">
-        <div class="card" style="border-top-left-radius:0;border-top-right-radius:0;">
-            <h3>二次函数压轴题（含动点 / 分类讨论）</h3>
-            <div class="highlight">
-                <strong>场景画像：</strong>中考"最后一道题"，通常分(1)(2)(3)三个小问。本质是<strong>考察学生拆解复杂问题的能力</strong>。辅导难点在于畏难情绪和不会拆解。
-            </div>
-
-            <h4>学生卡点图谱</h4>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>编号</th><th>卡点</th><th>具体表现</th><th>深层根因</th><th>占比</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>F1</strong></td><td>畏难放弃</td><td>"压轴题太难了我不会"</td><td>被总体印象吓退</td><td>~20%</td></tr>
-                        <tr><td><strong>F2</strong></td><td>动点参数化困难</td><td>不会用t表示P的坐标</td><td>缺乏"运动→参数"思维</td><td>~25%</td></tr>
-                        <tr><td><strong>F3</strong></td><td>分类讨论不全</td><td>只考虑一种情况</td><td>不理解为什么要分类</td><td>~30%</td></tr>
-                        <tr><td><strong>F4</strong></td><td>小问之间脱节</td><td>第(2)问从头做起</td><td>不理解压轴题递进设计</td><td>~25%</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h4>好辅导 vs 坏辅导</h4>
-            <div class="comparison">
-                <div class="comparison-bad">
-                    <div class="comparison-label">❌ 坏辅导</div>
-                    <div class="comparison-text">"设P(t, t²−2t+1)，当t=...时分两种情况..."</div>
-                </div>
-                <div class="comparison-good">
-                    <div class="comparison-label">✅ 好辅导</div>
-                    <div class="comparison-text">"先别慌，第(1)问在问什么？我们一步一步来。"</div>
-                </div>
-            </div>
-
-            <h4>元认知引导</h4>
-            <div class="chat-demo">
-                <div class="chat-label">老师</div>
-                <div class="chat-bubble chat-teacher">压轴题你拿下了！最后问你——<br>1. 哪一问最难？为什么？<br>2. 分类讨论漏了一种，以后怎么避免？<br>3. 考试只剩10分钟，你怎么分配时间？</div>
-                <div class="chat-label chat-label-right">学生</div>
-                <div class="chat-bubble chat-student">先确保第(1)问拿满分，然后看第(2)问</div>
-                <div class="chat-label">老师</div>
-                <div class="chat-bubble chat-teacher">对，压轴题不是全做完才得分，每一问都有分。这就是考试策略。</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== 10个真实问题 ===== -->
-<section id="problems">
-    <div class="section-header">
-        <div class="section-number" style="background:var(--danger);">!</div>
-        <div>
-            <div class="section-title">10个真实问题 & 修复</div>
-            <div class="section-subtitle">模拟真实初中生使用场景，发现并解决的结构性缺陷</div>
-        </div>
-    </div>
-
-    <div class="highlight accent">
-        <strong>方法论：</strong>设计完初版Prompt后，我们模拟真实初中生晚上写作业的场景，逐一发现并修复了10个结构性问题。这也是V1→V2的核心升级动力。
-    </div>
-
-    <div class="issue-grid">
-        <div class="issue-card">
-            <div class="issue-number">1</div>
-            <div class="issue-title">学生说"不知道"时引导链卡死</div>
-            <div class="issue-solution">→ <strong>冷启动降级</strong>：老师先示范一步，学生模仿</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">2</div>
-            <div class="issue-title">错误分类边界模糊，模型判断不了</div>
-            <div class="issue-solution">→ <strong>追问澄清优先</strong>：先问"你怎么得到的？"再自然判断</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">3</div>
-            <div class="issue-title">线性引导链不适配非线性学生</div>
-            <div class="issue-solution">→ <strong>状态机</strong>：支持跳转、回退、从中间进入</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">4</div>
-            <div class="issue-title">元认知反思变成机械仪式</div>
-            <div class="issue-solution">→ <strong>条件触发</strong>：有卡点才深度反思，顺畅则简短总结</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">5</div>
-            <div class="issue-title">几何题 AI 看不见图</div>
-            <div class="issue-solution">→ <strong>图形口述协议</strong> + 产品限制声明</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">6</div>
-            <div class="issue-title">学生赶作业不想被引导</div>
-            <div class="issue-solution">→ <strong>效率模式</strong>：更直接的提示但不给完整答案</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">7</div>
-            <div class="issue-title">学生带着错误答案来 debug</div>
-            <div class="issue-solution">→ <strong>新增 Skill 5</strong>（逆向Debug）</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">8</div>
-            <div class="issue-title">输入残缺/模糊/口语化</div>
-            <div class="issue-solution">→ <strong>信息补全前置流程</strong>，最高优先级</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">9</div>
-            <div class="issue-title">一道题横跨多个题型</div>
-            <div class="issue-solution">→ <strong>步骤级路由</strong>，而非题目级</div>
-        </div>
-        <div class="issue-card">
-            <div class="issue-number">10</div>
-            <div class="issue-title">不同水平学生需要不同粒度</div>
-            <div class="issue-solution">→ <strong>水平动态评估</strong>机制</div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== 模块二：架构 ===== -->
-<section id="module2">
-    <div class="section-header">
-        <div class="section-number">2</div>
-        <div>
-            <div class="section-title">模块二：Prompt 架构设计</div>
-            <div class="section-subtitle">Skill 按需加载 · 状态机引导链 · 步骤级路由</div>
-        </div>
-    </div>
-
+    <!-- 元认知 -->
     <div class="card">
-        <h3>架构总览（V2）</h3>
-        <div class="arch-diagram">┌──────────────────────────────────────────┐
-│         主 System Prompt（极简）           │
-│  角色 + 核心原则 + 输入预处理              │
-│  + 水平评估 + 模式切换 + 步骤级路由        │
-└──────────────┬───────────────────────────┘
+        <h3>做完题后：元认知反思</h3>
+        <div class="chat">
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">做完了，很棒。回想一下——你在哪一步卡住最久？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">列方程那步...不知道用哪句话</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">对，那下次遇到应用题，你打算第一步做什么？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">先画表格整理条件？</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">完全正确。这就是你从这道题带走的方法——比答案本身重要多了。</div>
+        </div>
+    </div>
+
+    <!-- 另外两个题型折叠 -->
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📐 几何证明题：逆向分析引导链 + 图形口述协议</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="hbox">
+                <strong>核心引导思路：</strong>逆向分析——"要证什么？→需要什么条件？→哪些已有哪些还缺？"。不直接说加什么辅助线，而是问"图里能不能创造一个新三角形？"
+            </div>
+            <p style="margin:12px 0;font-size:0.9rem;color:var(--g700);">
+                <strong>卡点：</strong>不知道从哪入手(35%) · 对应元素找不全(25%) · 辅助线恐惧(20%) · 书写跳步(20%)<br><br>
+                <strong>图形信息协议（V2新增）：</strong>能看到图 → 描述确认；看不到 → 要求学生口述；学生要求"帮我画" → 诚实说明交互限制，改为口头指导。
+            </p>
+            <div class="cmp">
+                <div class="cmp-bad"><div class="cmp-label">❌ 坏辅导</div><div class="cmp-text">"作辅助线EF∥BC，由平行线性质..."</div></div>
+                <div class="cmp-good"><div class="cmp-label">✅ 好辅导</div><div class="cmp-text">"结论让你证什么？要证它，你需要什么？"</div></div>
+            </div>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🎯 二次函数压轴题：化解畏难 + 分步拆解 + 分类讨论</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="hbox">
+                <strong>核心引导思路：</strong>"先别慌，只看第(1)问。" 每做完一问就肯定学生，建立信心。提醒前一问的结论后面要用。分类讨论前先问"P还能在什么位置？"
+            </div>
+            <p style="margin:12px 0;font-size:0.9rem;color:var(--g700);">
+                <strong>卡点：</strong>畏难放弃(20%) · 动点参数化(25%) · 分类讨论不全(30%) · 小问脱节(25%)<br><br>
+                <strong>跨Skill调度（V2新增）：</strong>第(3)问涉及几何证明 → 借用Skill 2的逆向分析方法。一道题不同步骤可调用不同Skill。
+            </p>
+            <div class="cmp">
+                <div class="cmp-bad"><div class="cmp-label">❌ 坏辅导</div><div class="cmp-text">"设P(t, t²−2t+1)，分两种情况..."</div></div>
+                <div class="cmp-good"><div class="cmp-label">✅ 好辅导</div><div class="cmp-text">"第(1)问在问什么？我们一步步来。"</div></div>
+            </div>
+        </div></div>
+    </div>
+</section>
+
+<!-- ===== 4. 架构 + 10个问题 ===== -->
+<section id="architecture">
+    <div class="sec-label">Prompt 架构</div>
+    <div class="sec-title">Skill 按需加载 · 状态机引导</div>
+    <div class="sec-desc">一个极简主Prompt负责路由，5个Skill按需注入</div>
+
+    <div class="arch">┌──────────────────────────────────────┐
+│       主 System Prompt（~500字）      │
+│  输入预处理 · 水平评估 · 模式切换     │
+│  步骤级路由 · 冷启动降级 · 兜底       │
+└──────────────┬───────────────────────┘
                │ 按需加载（步骤级）
     ┌──────────┼──────────┐
     ▼          ▼          ▼
 ┌────────┐ ┌────────┐ ┌────────┐
 │ Skill1 │ │ Skill2 │ │ Skill3 │
 │ 应用题  │ │几何证明 │ │ 压轴题  │
-│ 状态机  │ │ 状态机  │ │ 状态机  │
-│含冷启动 │ │含图形协议│ │含冷启动 │
+│ 状态机  │ │+图形协议│ │+跨Skill│
 └────┬───┘ └────┬───┘ └────┬───┘
-     │          │          │
-     │    ┌─────┴─────┐    │
-     └───►│  Skill4   │◄───┘
-          │ 元认知反思  │
-          │ 条件触发    │
-          └─────┬─────┘
-                │
-          ┌─────▼─────┐
-          │  Skill5   │
-          │ 逆向Debug  │
-          └───────────┘</div>
+     └──────────┼──────────┘
+          ┌─────┴─────┐
+          ▼           ▼
+     ┌────────┐  ┌────────┐
+     │ Skill4 │  │ Skill5 │
+     │元认知   │  │逆向    │
+     │条件触发 │  │Debug   │
+     └────────┘  └────────┘</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0;">
+        <div style="background:var(--primary-bg);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:var(--primary);">📋 输入预处理</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">残缺→追问 · 图片→口述确认</div>
+        </div>
+        <div style="background:#FEF3C7;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:#92400E;">📊 水平评估</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">前2轮评估 · 持续动态调整</div>
+        </div>
+        <div style="background:#DBEAFE;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:#1D4ED8;">🔀 三种模式</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">引导 · 效率 · Debug</div>
+        </div>
+        <div style="background:#F3E8FF;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-weight:700;font-size:0.85rem;color:#7C3AED;">🛤️ 步骤级路由</div>
+            <div style="font-size:0.8rem;color:var(--g500);margin-top:4px;">一道题可调用多个Skill</div>
+        </div>
     </div>
 
+    <!-- 为什么不用大Prompt -->
     <div class="card">
-        <h3>为什么用 Skill 架构而非单一大 Prompt？</h3>
-        <div class="table-wrap">
+        <h3>为什么 Skill 架构而非单一大 Prompt？</h3>
+        <div class="tw">
             <table>
                 <thead><tr><th>维度</th><th>单一大 Prompt</th><th>Skill 按需加载</th></tr></thead>
                 <tbody>
-                    <tr><td>指令长度</td><td>~2000字，模型尾部遗忘</td><td style="color:var(--success);font-weight:600;">主Prompt ~500字 + 当前Skill ~400字</td></tr>
-                    <tr><td>规则冲突</td><td>应用题和几何策略同时在场</td><td style="color:var(--success);font-weight:600;">只加载当前需要的Skill</td></tr>
-                    <tr><td>迭代成本</td><td>改一处可能影响全局</td><td style="color:var(--success);font-weight:600;">只改对应Skill</td></tr>
-                    <tr><td>扩展性</td><td>越来越臃肿</td><td style="color:var(--success);font-weight:600;">新增Skill文件即可</td></tr>
+                    <tr><td>指令长度</td><td>~2000字，模型尾部遗忘</td><td style="color:var(--success);font-weight:600;">~500 + ~400字</td></tr>
+                    <tr><td>规则冲突</td><td>所有策略同时在场</td><td style="color:var(--success);font-weight:600;">只加载当前Skill</td></tr>
+                    <tr><td>迭代成本</td><td>改一处影响全局</td><td style="color:var(--success);font-weight:600;">只改对应Skill</td></tr>
+                    <tr><td>扩展性</td><td>越来越臃肿</td><td style="color:var(--success);font-weight:600;">新增Skill即可</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
+</section>
 
-    <div class="card">
-        <h3>主 System Prompt 核心模块</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px;">
-            <div style="background:var(--primary-bg);border-radius:8px;padding:16px;">
-                <div style="font-weight:700;font-size:0.9rem;color:var(--primary);">📋 输入预处理</div>
-                <div style="font-size:0.85rem;color:var(--gray-600);margin-top:4px;">信息不完整 → 追问补全<br>几何图形 → 口述确认协议</div>
-            </div>
-            <div style="background:#FEF3C7;border-radius:8px;padding:16px;">
-                <div style="font-weight:700;font-size:0.9rem;color:#92400E;">📊 水平动态评估</div>
-                <div style="font-size:0.85rem;color:var(--gray-600);margin-top:4px;">前2轮评估 → 持续调整<br>高→合并步骤 / 低→拆细+示范</div>
-            </div>
-            <div style="background:#DBEAFE;border-radius:8px;padding:16px;">
-                <div style="font-weight:700;font-size:0.9rem;color:#1D4ED8;">🔀 模式切换</div>
-                <div style="font-size:0.85rem;color:var(--gray-600);margin-top:4px;">引导模式（默认）<br>效率模式 / Debug模式</div>
-            </div>
-            <div style="background:#F3E8FF;border-radius:8px;padding:16px;">
-                <div style="font-weight:700;font-size:0.9rem;color:#7C3AED;">🛤️ 步骤级路由</div>
-                <div style="font-size:0.85rem;color:var(--gray-600);margin-top:4px;">一道题不同步骤<br>可调用不同Skill</div>
-            </div>
-        </div>
+<!-- ===== 5. 10个真实问题 ===== -->
+<section id="problems">
+    <div class="sec-label">V1 → V2 迭代</div>
+    <div class="sec-title">10个真实问题 & 修复</div>
+    <div class="sec-desc">模拟真实用户使用，发现并修复的结构性缺陷——这是方案的核心竞争力</div>
+
+    <div class="issues">
+        <div class="iss"><div class="iss-num">1</div><div class="iss-title">学生说"不知道"引导卡死</div><div class="iss-fix">→ 冷启动降级：示范→模仿</div></div>
+        <div class="iss"><div class="iss-num">2</div><div class="iss-title">错误分类边界模糊</div><div class="iss-fix">→ 追问澄清优先，再自然判断</div></div>
+        <div class="iss"><div class="iss-num">3</div><div class="iss-title">线性引导链太死板</div><div class="iss-fix">→ 改为状态机，支持跳转回退</div></div>
+        <div class="iss"><div class="iss-num">4</div><div class="iss-title">元认知变机械仪式</div><div class="iss-fix">→ 条件触发，4种场景4种深度</div></div>
+        <div class="iss"><div class="iss-num">5</div><div class="iss-title">几何题 AI 看不见图</div><div class="iss-fix">→ 图形口述协议 + 限制声明</div></div>
+        <div class="iss"><div class="iss-num">6</div><div class="iss-title">学生赶作业不想被引导</div><div class="iss-fix">→ 效率模式：快速提示不给全答案</div></div>
+        <div class="iss"><div class="iss-num">7</div><div class="iss-title">带着错误答案来 debug</div><div class="iss-fix">→ 新增 Skill 5（逆向Debug）</div></div>
+        <div class="iss"><div class="iss-num">8</div><div class="iss-title">输入残缺/模糊/口语化</div><div class="iss-fix">→ 信息补全前置流程</div></div>
+        <div class="iss"><div class="iss-num">9</div><div class="iss-title">一道题横跨多个题型</div><div class="iss-fix">→ 步骤级路由替代题目级</div></div>
+        <div class="iss"><div class="iss-num">10</div><div class="iss-title">不同水平需要不同粒度</div><div class="iss-fix">→ 水平动态评估机制</div></div>
     </div>
 </section>
 
-<!-- ===== 5个Skill详解 ===== -->
-<section id="skills">
-    <div class="section-header">
-        <div class="section-number" style="background:#7C3AED;">S</div>
-        <div>
-            <div class="section-title">5 个 Skill 详解</div>
-            <div class="section-subtitle">每个 Skill 均为状态机架构，支持跳转、回退、冷启动降级</div>
+<!-- ===== 6. 完整Prompt ===== -->
+<section id="prompts">
+    <div class="sec-label">完整交付物</div>
+    <div class="sec-title">可复制的 Prompt 文本</div>
+    <div class="sec-desc">点击展开查看主 System Prompt 和各 Skill 的完整文本</div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📄 主 System Prompt（V2 完整版）</span>
+            <span class="arr">▼</span>
         </div>
+        <div class="coll-b"><div class="coll-inner">
+            <pre style="background:#1E1E2E;color:#CDD6F4;border-radius:var(--r);padding:20px;font-size:0.8rem;line-height:1.7;overflow-x:auto;white-space:pre-wrap;">
+# 角色
+你是一位耐心的初中数学辅导老师。你的学生是7~9年级的初中生。
+
+# ===== 输入预处理（最高优先级）=====
+收到学生消息后，先判断输入是否完整可用：
+- 信息不完整 → "你能把完整的题目发给我吗？"
+- 几何图形 → 能看到则描述确认；看不到则要求口述
+
+# ===== 水平动态评估 =====
+前2轮评估学生水平，动态调整：
+- 水平高 → 合并步骤，跳过简单环节
+- 水平中 → 标准引导流程
+- 水平低/畏难 → 拆细步骤，示范→模仿
+
+# ===== 模式切换 =====
+- 引导模式（默认）：逐步引导
+- 效率模式（学生赶时间）：更直接的提示，但不给完整答案
+- Debug模式（学生带着错误答案来）：加载逆向Debug
+
+# ===== 核心原则 =====
+1. 绝不直接给答案
+2. 一次只推一步
+3. 先诊断再引导
+4. 鼓励优先
+
+# ===== 错误应对 =====
+学生犯错 → 先问"你怎么得到的？"
+- 概念错 → 反例让学生自己发现
+- 策略错 → 让学生走到死胡同再回头
+- 计算错 → 直接指出哪步错
+
+# ===== 冷启动降级 =====
+学生连续2次"不知道" → 示范一步，让学生模仿下一步
+
+# ===== 步骤级路由 =====
+按步骤匹配Skill，一道题可调用多个Skill
+
+# ===== 风格 =====
+亲切自然 · 每轮3~5句 · 公式用LaTeX · 每步确认理解
+            </pre>
+        </div></div>
     </div>
 
-    <!-- Skill 1 -->
-    <div class="skill-card">
-        <div class="skill-header">
-            <div class="skill-icon" style="background:#DBEAFE;color:#2563EB;">📐</div>
-            <div>
-                <h3>Skill 1：应用题引导 <span class="badge badge-blue">状态机</span></h3>
-                <p>行程 / 工程 / 利润 / 浓度等应用题的逐步引导</p>
-            </div>
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📐 Skill 1：应用题引导（状态机版）</span>
+            <span class="arr">▼</span>
         </div>
-        <div class="skill-body">
-            <div class="state-flow">
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">A</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">条件提取</div>
-                        <div class="state-desc">"题目里出现了哪些人/物？各自有什么信息？"</div>
-                        <div class="state-cold">示范画表格，让学生填信息</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">B</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">设未知数</div>
-                        <div class="state-desc">"题目问你求什么？那个量设为x。"</div>
-                        <div class="state-cold">直接建议"这道题设XX为x，你觉得行吗？"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">C</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">用x表示所有量 + 找等量关系</div>
-                        <div class="state-desc">填完表格 → "还有哪句话你没用到？那句话说的是什么关系？"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">D</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">检查方程 + 求解</div>
-                        <div class="state-desc">确认方程 → 求解 → 计算错直接指出</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">E</div></div>
-                    <div class="state-content">
-                        <div class="state-title">检验</div>
-                        <div class="state-desc">代回原题验证 → 触发元认知反思</div>
-                    </div>
-                </div>
+        <div class="coll-b"><div class="coll-inner">
+            <p style="font-size:0.9rem;color:var(--g700);margin-bottom:12px;">状态机流程：根据学生当前状态跳转</p>
+            <div class="sf">
+                <div class="sf-node">入口判断</div><span class="sf-arrow">→</span>
+                <div class="sf-node">A 条件提取</div><span class="sf-arrow">→</span>
+                <div class="sf-node">B 设未知数</div><span class="sf-arrow">→</span>
+                <div class="sf-node">C 列方程</div><span class="sf-arrow">→</span>
+                <div class="sf-node">D 求解</div><span class="sf-arrow">→</span>
+                <div class="sf-node">E 检验</div>
             </div>
-            <div class="highlight" style="font-size:0.85rem;">
-                <strong>跳转规则：</strong>学生已经列了方程 → 直接进入 State D；学生有完整解法但答案不对 → 转交 Skill 5（逆向Debug）
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>跳转规则：</strong>学生已列方程 → 直接State D · 有完整解法但答案不对 → Skill 5 · 每个State都有冷启动降级
             </div>
-        </div>
+        </div></div>
     </div>
 
-    <!-- Skill 2 -->
-    <div class="skill-card">
-        <div class="skill-header">
-            <div class="skill-icon" style="background:#FCE7F3;color:#DB2777;">📐</div>
-            <div>
-                <h3>Skill 2：几何证明引导 <span class="badge badge-purple">含图形协议</span></h3>
-                <p>全等 / 相似 / 角度 / 平行线证明题的逆向分析引导</p>
-            </div>
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>📐 Skill 2：几何证明引导（含图形协议）</span>
+            <span class="arr">▼</span>
         </div>
-        <div class="skill-body">
-            <div class="highlight accent" style="font-size:0.85rem;">
-                <strong>图形信息协议（最高优先级）：</strong>能看到图 → 描述确认；看不到 → 要求学生口述；学生要求"帮我画" → 诚实说明交互限制，改为口头指导标记。
+        <div class="coll-b"><div class="coll-inner">
+            <div class="sf">
+                <div class="sf-node">图形确认</div><span class="sf-arrow">→</span>
+                <div class="sf-node">A 明确目标</div><span class="sf-arrow">→</span>
+                <div class="sf-node">B 逆向分析</div><span class="sf-arrow">→</span>
+                <div class="sf-node">C 清点条件</div><span class="sf-arrow">→</span>
+                <div class="sf-node">D 找缺失</div><span class="sf-arrow">→</span>
+                <div class="sf-node">E 辅助线</div><span class="sf-arrow">→</span>
+                <div class="sf-node">F 书写</div>
             </div>
-            <div class="state-flow">
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">A</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">明确目标</div>
-                        <div class="state-desc">"结论让你证什么？用一句话说出来。"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">B</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">逆向分析</div>
-                        <div class="state-desc">"要证这个结论，需要什么中间结论？"</div>
-                        <div class="state-cold">示范："要证AB=CD，最常用的是证全等。你觉得哪两个三角形可能全等？"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">C</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">清点已有条件</div>
-                        <div class="state-desc">"需要三组对应。你现在能直接看出来几组？"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">D</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">寻找缺失条件</div>
-                        <div class="state-desc">"有没有公共边？对顶角？平行线带来的等角？"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">E</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">辅助线</div>
-                        <div class="state-desc">"能不能创造一个新的三角形？" → 回到 State C 重新清点</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot">F</div></div>
-                    <div class="state-content">
-                        <div class="state-title">组织书写</div>
-                        <div class="state-desc">示范第一步格式 → 学生模仿</div>
-                    </div>
-                </div>
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>图形协议：</strong>能看到→描述确认 · 看不到→要求口述 · 辅助线需要→回State C重新清点
             </div>
-        </div>
+        </div></div>
     </div>
 
-    <!-- Skill 3 -->
-    <div class="skill-card">
-        <div class="skill-header">
-            <div class="skill-icon" style="background:#FEF3C7;color:#D97706;">🎯</div>
-            <div>
-                <h3>Skill 3：压轴题引导 <span class="badge badge-orange">跨Skill调度</span></h3>
-                <p>二次函数压轴题（动点/最值/存在性/分类讨论）</p>
-            </div>
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🎯 Skill 3：压轴题引导（跨Skill调度）</span>
+            <span class="arr">▼</span>
         </div>
-        <div class="skill-body">
-            <div class="state-flow">
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#D97706;">0</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">化解畏难</div>
-                        <div class="state-desc">"别怕。我们只看第(1)问，其他先不管。"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#D97706;">1</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">第(1)问：求解析式</div>
-                        <div class="state-desc">待定系数法 → "记住这个解析式，后面要用"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#D97706;">2</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">第(2)问：面积/长度</div>
-                        <div class="state-desc">检查是否复用第(1)问结论 · 可借用Skill 2的逆向分析</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#D97706;">3</div></div>
-                    <div class="state-content">
-                        <div class="state-title">第(3)问：动点/分类讨论/存在性</div>
-                        <div class="state-desc">动点参数化 → 分类讨论（检查所有情况） → 存在性判断</div>
-                    </div>
-                </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="sf">
+                <div class="sf-node">0 化解畏难</div><span class="sf-arrow">→</span>
+                <div class="sf-node">1 第(1)问</div><span class="sf-arrow">→</span>
+                <div class="sf-node">2 第(2)问</div><span class="sf-arrow">→</span>
+                <div class="sf-node">3 第(3)问</div>
             </div>
-            <div class="highlight" style="font-size:0.85rem;">
-                <strong>跨Skill调度：</strong>第(3)问涉及几何 → 借用 Skill 2；需要建模 → 借用 Skill 1 的 State C。不需要完整切换，只借用对应的思维方法。
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>跨Skill：</strong>第(3)问涉及几何→借Skill 2 · 需要建模→借Skill 1 · 不完整切换，只借思维方法
             </div>
-        </div>
+        </div></div>
     </div>
 
-    <!-- Skill 4 -->
-    <div class="skill-card">
-        <div class="skill-header">
-            <div class="skill-icon" style="background:#D1FAE5;color:#059669;">🧠</div>
-            <div>
-                <h3>Skill 4：元认知反思 <span class="badge badge-green">条件触发</span></h3>
-                <p>做完题后的自我监控训练，根据辅导过程动态调整深度</p>
-            </div>
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🧠 Skill 4：元认知反思（条件触发）</span>
+            <span class="arr">▼</span>
         </div>
-        <div class="skill-body">
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>情况</th><th>触发行为</th><th>对话轮数</th></tr></thead>
-                    <tbody>
-                        <tr><td>有明显卡点</td><td>完整反思：定位卡点→归因→迁移策略</td><td>3轮</td></tr>
-                        <tr><td>做题很顺</td><td>简短总结："核心方法是XX。下一题？"</td><td>1轮</td></tr>
-                        <tr><td>效率模式</td><td>嵌入收尾："关键是XX。下一题发来吧。"</td><td>0.5轮</td></tr>
-                        <tr><td>连续同类题</td><td>模式识别："和上一道套路像？都是XX。"</td><td>1轮</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Skill 5 -->
-    <div class="skill-card">
-        <div class="skill-header">
-            <div class="skill-icon" style="background:#FEE2E2;color:#DC2626;">🔍</div>
-            <div>
-                <h3>Skill 5：逆向 Debug <span class="badge badge-red">V2新增</span></h3>
-                <p>学生带着自己的解法来问"哪里错了"时的逆向排查</p>
-            </div>
-        </div>
-        <div class="skill-body">
-            <div class="state-flow">
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#DC2626;">A</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">获取解题过程</div>
-                        <div class="state-desc">"你能把你的解题步骤说一遍吗？从头开始。"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#DC2626;">B</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">逐步检查</div>
-                        <div class="state-desc">"第一步没问题...第二步这里，你是怎么得到的？"</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#DC2626;">C</div><div class="state-connector"></div></div>
-                    <div class="state-content">
-                        <div class="state-title">引导发现错误</div>
-                        <div class="state-desc">概念错→反例 / 策略错→引导调整 / 计算错→直接指出</div>
-                    </div>
-                </div>
-                <div class="state-item">
-                    <div class="state-line"><div class="state-dot" style="background:#DC2626;">D</div></div>
-                    <div class="state-content">
-                        <div class="state-title">修正验证</div>
-                        <div class="state-desc">"从出错的地方重新算，答案和标准答案一样吗？"</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== 模块三 ===== -->
-<section id="module3">
-    <div class="section-header">
-        <div class="section-number">3</div>
-        <div>
-            <div class="section-title">模块三：产品级落地说明</div>
-            <div class="section-subtitle">技术限制、产品考量与未来扩展</div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>图形交互限制</h3>
-        <p>当前大模型在几何题场景下存在固有限制——无法在图上标注、无法让学生上传手写标记。</p>
-        <div class="highlight success">
-            <strong>建议：</strong>产品层面提供简易画板工具（类似 GeoGebra），学生在画板上操作，AI 通过 API 获取图形信息。画板不可用时，通过 Skill 2 的"图形口述协议"降级处理。
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>多 Skill 协同</h3>
-        <p>压轴题等复杂题型可能在一道题内跨 Skill 调度。</p>
-        <div class="highlight">
-            <strong>推荐方案：</strong>用 Tool Use 实现——主 Prompt 作为 controller，根据当前步骤类型调用不同 Skill 的 tool，上下文通过 function calling 自然传递。
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>效率模式的产品考量</h3>
-        <p>AI 家教的核心矛盾是<strong>"教学质量 vs 用户留存"</strong>。学生赶作业时强行引导会导致用户流失。</p>
-        <div class="highlight accent">
-            <strong>平衡策略：</strong>效率模式降低引导深度但不降到"直接给答案"，在保留最低教学价值的同时满足用户效率需求。
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>落地方式对比</h3>
-        <div class="table-wrap">
-            <table>
-                <thead><tr><th>方式</th><th>原理</th><th>适用场景</th></tr></thead>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="tw"><table>
+                <thead><tr><th>场景</th><th>行为</th><th>轮数</th></tr></thead>
                 <tbody>
-                    <tr><td><strong>Tool Use</strong></td><td>每个Skill定义为tool，模型自动调用</td><td>API集成产品</td></tr>
-                    <tr><td><strong>XML标签</strong></td><td>Skill用XML包裹，模型按题型聚焦</td><td>单Prompt限制场景</td></tr>
-                    <tr><td><strong>多轮注入</strong></td><td>先路由，第二轮注入对应Skill</td><td>对话式产品</td></tr>
+                    <tr><td>有卡点</td><td>完整反思：定位→归因→迁移</td><td>3轮</td></tr>
+                    <tr><td>很顺</td><td>"核心方法是XX。下一题？"</td><td>1轮</td></tr>
+                    <tr><td>赶时间</td><td>嵌入收尾一句话</td><td>0轮</td></tr>
+                    <tr><td>连续同类题</td><td>模式识别："和上题套路像"</td><td>1轮</td></tr>
                 </tbody>
-            </table>
+            </table></div>
+        </div></div>
+    </div>
+
+    <div class="coll">
+        <div class="coll-h" onclick="this.parentElement.classList.toggle('open')">
+            <span>🔍 Skill 5：逆向Debug（V2新增）</span>
+            <span class="arr">▼</span>
+        </div>
+        <div class="coll-b"><div class="coll-inner">
+            <div class="sf">
+                <div class="sf-node">A 获取过程</div><span class="sf-arrow">→</span>
+                <div class="sf-node">B 逐步检查</div><span class="sf-arrow">→</span>
+                <div class="sf-node">C 引导发现</div><span class="sf-arrow">→</span>
+                <div class="sf-node">D 修正验证</div>
+            </div>
+            <div class="hbox" style="font-size:0.85rem;">
+                <strong>适用于：</strong>学生带着自己的解法来问"哪里错了" · 沿学生的步骤逐步找到第一个出错位置
+            </div>
+        </div></div>
+    </div>
+</section>
+
+<!-- ===== 7. 产品思考 ===== -->
+<section id="product">
+    <div class="sec-label">产品级思考</div>
+    <div class="sec-title">落地考量</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+        <div class="card">
+            <h3>教学质量 vs 用户留存</h3>
+            <p style="font-size:0.88rem;color:var(--g700);">学生赶作业时强行引导 → 用户流失。效率模式是平衡——降低引导深度但不降到"直接给答案"。</p>
+        </div>
+        <div class="card">
+            <h3>几何题的图形限制</h3>
+            <p style="font-size:0.88rem;color:var(--g700);">建议产品层提供简易画板（类似GeoGebra），AI通过API获取图形信息。不可用时降级为口述协议。</p>
+        </div>
+        <div class="card">
+            <h3>技术实现路径</h3>
+            <p style="font-size:0.88rem;color:var(--g700);">Tool Use（每个Skill定义为tool）· XML标签（模型按题型聚焦）· 多轮注入（先路由再加载）</p>
         </div>
     </div>
 </section>
@@ -1545,54 +619,8 @@
 </div>
 
 <footer>
-    <p style="margin-bottom:8px;">AI家教 Prompt 设计方案 — 初中数学</p>
-    <p>与 AI 深度共创的全过程设计 · 从构思到落地</p>
+    <p>AI家教 Prompt 设计方案 — 初中数学 · 与 AI 深度共创</p>
 </footer>
 
-<script>
-// Tabs
-document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        const tabGroup = tab.closest('section');
-        tabGroup.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tabGroup.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-    });
-});
-
-// Collapsible
-function toggleCollapse(header) {
-    header.parentElement.classList.toggle('open');
-}
-
-// Sticky Nav active state
-const navItems = document.querySelectorAll('.nav-item');
-const sections = document.querySelectorAll('section');
-
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-        if (window.scrollY >= section.offsetTop - 80) {
-            current = section.id;
-        }
-    });
-    navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href') === '#' + current) {
-            item.classList.add('active');
-        }
-    });
-});
-
-// Smooth scroll
-navItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = document.querySelector(item.getAttribute('href'));
-        target.scrollIntoView({ behavior: 'smooth' });
-    });
-});
-</script>
 </body>
 </html>
