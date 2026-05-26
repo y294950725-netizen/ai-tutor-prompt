@@ -523,6 +523,77 @@
         }
         footer a { color: var(--primary-light); text-decoration: none; }
 
+        /* ===== Timeline ===== */
+        .timeline { position: relative; padding-left: 40px; margin: 24px 0; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-light), var(--accent));
+        }
+        .tl-item { position: relative; margin-bottom: 32px; }
+        .tl-dot {
+            position: absolute;
+            left: -33px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--primary-bg);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        .tl-item:last-child .tl-dot { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+        .tl-phase {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .tl-title { font-size: 1.05rem; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+        .tl-desc { font-size: 0.9rem; color: var(--gray-600); line-height: 1.7; }
+        .tl-quote {
+            background: var(--gray-100);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+            border-left: 3px solid var(--primary-light);
+        }
+        .tl-quote-me { border-left-color: var(--accent); }
+        .tl-speaker {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .tl-speaker-ai { color: var(--primary); }
+        .tl-speaker-me { color: var(--accent); }
+        .tl-insight {
+            background: linear-gradient(135deg, var(--primary-bg), #F5F3FF);
+            border: 1px solid var(--primary-light);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+        .tl-insight::before { content: '💡 '; }
+        .tl-arrow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+        .tl-arrow::before { content: '→'; }
+
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .hero h1 { font-size: 1.8rem; }
@@ -552,7 +623,8 @@
 <!-- Sticky Nav -->
 <div class="sticky-nav">
     <div class="sticky-nav-inner">
-        <a class="nav-item active" href="#design">设计理念</a>
+        <a class="nav-item active" href="#process">设计过程</a>
+        <a class="nav-item" href="#design">设计理念</a>
         <a class="nav-item" href="#module1">模块一：场景解构</a>
         <a class="nav-item" href="#module2">模块二：Prompt架构</a>
         <a class="nav-item" href="#problems">10个真实问题</a>
@@ -562,6 +634,182 @@
 </div>
 
 <div class="container">
+
+<!-- ===== 设计过程 ===== -->
+<section id="process">
+    <div class="section-header">
+        <div class="section-number" style="background:linear-gradient(135deg,var(--primary),var(--accent));">⚡</div>
+        <div>
+            <div class="section-title">设计过程：从构思到落地</div>
+            <div class="section-subtitle">全程与 AI 深度共创，6轮关键迭代，每一步都有思考</div>
+        </div>
+    </div>
+
+    <div class="highlight accent">
+        <strong>阅读指南：</strong>本板块还原了我与 AI 共创这套方案的完整思考路径。不是"让 AI 写一个 Prompt"，而是<strong>通过反复质疑、模拟、发现问题、迭代</strong>，最终得到一个经得起真实场景检验的设计。
+    </div>
+
+    <div class="timeline">
+
+        <!-- Round 1 -->
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-phase">第一轮 · 定方向</div>
+            <div class="tl-title">选什么学科？聚焦多少题型？</div>
+            <div class="tl-desc">面对5个学科的选择，我的判断是——初中数学题型结构化程度高，引导策略容易拆解，面试官也容易评判效果。</div>
+            <div class="tl-quote tl-quote-me">
+                <div class="tl-speaker tl-speaker-me">我的决策</div>
+                选初中数学，不求广度覆盖6个题型，而是<strong>聚焦3个题型做到极致</strong>。选应用题+几何证明+压轴题——简单→中等→困难的梯度，且每个需要完全不同的辅导策略。
+            </div>
+            <div class="tl-insight">3个题型的组合逻辑：不是随便选的，而是为了展示"不同题型需要不同引导策略"这个核心论点。如果3个题型用同一套策略就能搞定，那方案就没有说服力。</div>
+        </div>
+
+        <!-- Round 2 -->
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-phase">第二轮 · 定深度</div>
+            <div class="tl-title">每个题型要深挖到什么程度？</div>
+            <div class="tl-desc">我和 AI 讨论出了四层深度结构：场景画像 → 学生卡点图谱 → 辅导策略流 → 好辅导vs坏辅导对比。</div>
+            <div class="tl-quote tl-quote-me">
+                <div class="tl-speaker tl-speaker-me">我的思考</div>
+                大部分方案只列题型和策略，但不说"学生具体在哪一步卡住"。比如应用题，学生不是"不会列方程"这么笼统——而是可能卡在<strong>条件提取、设未知数、找等量关系、检验答案</strong>四个完全不同的环节，每个环节需要不同的引导。这个粒度才是有价值的。
+            </div>
+            <div class="tl-arrow">产出：模块一初版——三题型×四层深度解构</div>
+        </div>
+
+        <!-- Round 3 -->
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-phase">第三轮 · 加深度</div>
+            <div class="tl-title">有没有更极致的教学方案？</div>
+            <div class="tl-desc">初版完成后，我主动质疑：当前方案只是"标准好老师"的水平，能不能做到更极致？</div>
+            <div class="tl-quote">
+                <div class="tl-speaker tl-speaker-ai">AI 提供的维度</div>
+                4个升级方向：认知科学驱动、错误分类系统、元认知训练、迁移与模式识别。
+            </div>
+            <div class="tl-quote tl-quote-me">
+                <div class="tl-speaker tl-speaker-me">我的筛选</div>
+                4个都加太散了。我选了<strong>错误分类系统</strong>和<strong>元认知训练</strong>——这两个最能让面试官眼前一亮，因为市面上几乎没有 Prompt 方案做到这个层次。认知科学理论太学术，迁移训练可以放在元认知里。
+            </div>
+            <div class="tl-insight">
+                错误分类的核心洞察：对计算错误做苏格拉底式提问是浪费时间（"你觉得3+5等于几？"），对概念错误直接纠正则失去了最佳学习机会。<strong>精准分类→精准应对</strong>，这才是"像真人老师"的关键。
+            </div>
+        </div>
+
+        <!-- Round 4 -->
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-phase">第四轮 · 质疑架构</div>
+            <div class="tl-title">一套 Prompt 塞这么多东西，真的能执行吗？</div>
+            <div class="tl-desc">写完模块二初版后，我提出了一个关键质疑——</div>
+            <div class="tl-quote tl-quote-me">
+                <div class="tl-speaker tl-speaker-me">我的质疑</div>
+                "一套提示词，做这个架构，是不是有点困难。" 角色设定+3套题型策略+错误分类+元认知+风格规范+兜底机制…全塞进一个 System Prompt，指令太多模型顾此失彼。
+            </div>
+            <div class="tl-quote tl-quote-me">
+                <div class="tl-speaker tl-speaker-me">我的解法</div>
+                "是不是可以写成 Skill 的形式，按需加载？" 于是整个架构从"一个大 Prompt"重构为<strong>主Prompt + 5个Skill按需加载</strong>的模块化架构。
+            </div>
+            <div class="tl-insight">这是整个设计过程中最关键的一次转折。从"写Prompt"升级到了"设计Prompt架构"——面试官看到这一步会知道候选人不只会写提示词，还懂模型的执行边界。</div>
+            <div class="tl-arrow">产出：Skill 按需加载架构 V1</div>
+        </div>
+
+        <!-- Round 5 -->
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-phase">第五轮 · 压力测试</div>
+            <div class="tl-title">模拟真实用户，发现了10个结构性问题</div>
+            <div class="tl-desc">架构设计完后，我没有直接交付，而是做了一件关键的事——<strong>模拟一个真实初中生晚上写作业的场景</strong>，逐步走完整个 Prompt 的引导流程。</div>
+            <div class="tl-quote tl-quote-me">
+                <div class="tl-speaker tl-speaker-me">我的发现</div>
+                "站在真实用户视角上，还有哪些问题？" 一口气找出了10个结构性缺陷：
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">①</strong> 学生说"不知道"时引导链卡死
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">②</strong> 错误分类边界模糊执行不了
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">③</strong> 线性引导链不适配跳步学生
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">④</strong> 元认知反思变成机械仪式
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">⑤</strong> 几何题 AI 看不见图
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">⑥</strong> 学生赶作业不想被引导
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">⑦</strong> 学生带着错误答案来 debug
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">⑧</strong> 输入残缺/模糊/口语化
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">⑨</strong> 一道题横跨多个题型
+                </div>
+                <div style="background:var(--danger-bg);border-radius:8px;padding:10px 14px;font-size:0.82rem;">
+                    <strong style="color:var(--danger);">⑩</strong> 不同水平学生需要不同粒度
+                </div>
+            </div>
+            <div class="tl-insight">这一步是方案的核心竞争力。大部分候选人写完 Prompt 就交了。我选择主动找问题——因为一个没经过压力测试的 Prompt 方案，在面试官眼里就是纸上谈兵。</div>
+        </div>
+
+        <!-- Round 6 -->
+        <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-phase">第六轮 · 重构升级</div>
+            <div class="tl-title">V1 → V2：10个问题全部修复</div>
+            <div class="tl-desc">把10个问题逐一解决，产出了 V2 版本——</div>
+            <div style="margin-top:12px;">
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    <span class="badge badge-green">✓ 冷启动降级</span>
+                    <span class="badge badge-green">✓ 追问澄清优先</span>
+                    <span class="badge badge-green">✓ 线性→状态机</span>
+                    <span class="badge badge-green">✓ 元认知条件触发</span>
+                    <span class="badge badge-green">✓ 图形口述协议</span>
+                    <span class="badge badge-green">✓ 效率模式</span>
+                    <span class="badge badge-green">✓ 新增逆向Debug</span>
+                    <span class="badge badge-green">✓ 输入预处理</span>
+                    <span class="badge badge-green">✓ 步骤级路由</span>
+                    <span class="badge badge-green">✓ 水平动态评估</span>
+                </div>
+            </div>
+            <div class="tl-arrow">产出：完整 V2 架构——主Prompt + 5个Skill，全部状态机化</div>
+        </div>
+
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border:1px solid var(--primary-light);">
+        <h3 style="color:var(--primary);">设计过程的核心逻辑</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:12px;">
+            <div style="text-align:center;padding:12px;">
+                <div style="font-size:1.5rem;margin-bottom:8px;">🎯</div>
+                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">选择 > 覆盖</div>
+                <div style="font-size:0.82rem;color:var(--gray-500);">3个题型做极致<br>比6个题型做浅有价值</div>
+            </div>
+            <div style="text-align:center;padding:12px;">
+                <div style="font-size:1.5rem;margin-bottom:8px;">🔍</div>
+                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">质疑 > 执行</div>
+                <div style="font-size:0.82rem;color:var(--gray-500);">每写完一版就质疑<br>"真实场景下能用吗？"</div>
+            </div>
+            <div style="text-align:center;padding:12px;">
+                <div style="font-size:1.5rem;margin-bottom:8px;">🏗️</div>
+                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">架构 > 堆砌</div>
+                <div style="font-size:0.82rem;color:var(--gray-500);">发现大Prompt不可行<br>主动提出Skill模块化</div>
+            </div>
+            <div style="text-align:center;padding:12px;">
+                <div style="font-size:1.5rem;margin-bottom:8px;">🧪</div>
+                <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">测试 > 交付</div>
+                <div style="font-size:0.82rem;color:var(--gray-500);">主动模拟找出10个问题<br>而不是写完就交</div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- ===== 设计理念 ===== -->
 <section id="design">
