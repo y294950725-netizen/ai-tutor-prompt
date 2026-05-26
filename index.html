@@ -444,9 +444,9 @@
 
 <!-- ===== 6. 实测案例 ===== -->
 <section id="testing">
-    <div class="sec-label">模块三 · 实测验证</div>
-    <div class="sec-title">用真实题目压测 V2 Prompt</div>
-    <div class="sec-desc">选一道中考行程函数题，我扮演学生，用 V2 Prompt 驱动 AI 家教辅导。记录真实对话，暴露结构性缺陷。</div>
+    <div class="sec-label">模块三 · 步骤1：选取真题 & 步骤2：初始测试</div>
+    <div class="sec-title">V2 Prompt 实测：真实对话暴露结构性缺陷</div>
+    <div class="sec-desc">选一道中考行程函数题，我扮演学生与AI家教完成辅导全过程。先看V2哪里翻车，再看优化后的效果。</div>
 
     <!-- 测试题目 -->
     <div class="card">
@@ -536,11 +536,51 @@
     <div class="hbox" style="font-size:0.95rem;">
         <strong>核心洞察：</strong>这些不是"调参数"能修的bug——是<strong>架构方向错了</strong>。V2的控制流是"老师按流程推进"，但真实辅导应该是"学生主导节奏，老师响应"。需要从架构层重新设计。
     </div>
+
+    <!-- V3实测对比 -->
+    <div class="card" style="border:2px solid var(--success);">
+        <h3 style="color:var(--success);">✅ 优化后实测：同一道题，V3思路的效果</h3>
+        <p style="font-size:0.85rem;color:var(--g500);margin-bottom:14px;">基于V3 AI Native思路重新辅导同一道题，同一个学生。对比V2的7-8轮拖沓，V3仅用5轮完成。</p>
+
+        <div class="chat">
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">老师这题我都不太懂</div>
+            <div class="b-label">👨‍🏫 AI老师</div>
+            <div class="bubble b-teacher">没关系，先读一遍题，告诉我：这个故事里有几辆车？各自做了什么？像讲故事一样说就行。</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">2辆车，甲50km/h，走了1.6h，乙80km/h，中间停了一会</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#D1FAE5;color:#059669;padding:1px 6px;border-radius:4px;font-size:0.7rem;">识别：学生会读图会算速度，跳过基础引导</span></div>
+            <div class="bubble b-teacher">你已经把关键信息都从图上读出来了 👍 第(1)问问的是乙的路程函数。乙是从x=0出发的，还是从某个时间点才出发？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">乙后出发1.6h，用一小时赶上甲</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#D1FAE5;color:#059669;padding:1px 6px;border-radius:4px;font-size:0.7rem;">学生已掌握全部信息，直接推到写表达式</span></div>
+            <div class="bubble b-teacher">那你能直接写出函数表达式吗？乙从x=1.6出发，速度80。</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">y=50x吗</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#FEF3C7;color:#92400E;padding:1px 6px;border-radius:4px;font-size:0.7rem;">计算错→直接指出，不绕弯</span></div>
+            <div class="bubble b-teacher">两个地方想想：速度是谁的？你刚说乙是80。另外乙从x=1.6出发，走的时间不是x，而是？</div>
+            <div class="b-label b-label-r">🧑‍🎓 学生</div>
+            <div class="bubble b-student">y=80（x-1.6）？</div>
+            <div class="b-label">👨‍🏫 AI老师 <span style="background:#D1FAE5;color:#059669;padding:1px 6px;border-radius:4px;font-size:0.7rem;">增值收尾</span></div>
+            <div class="bubble b-teacher">✅ 对了！y=80(x-1.6)，1.6≤x≤2.6。你刚才第一次写y=50x，犯了两个典型错误——<strong>速度张冠李戴</strong>和<strong>起始时间不是0</strong>。这类题考试最容易在这两个地方丢分，记住了。</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <div style="background:var(--danger-bg);border-radius:8px;padding:14px;">
+                <div style="font-weight:700;color:var(--danger);font-size:0.85rem;margin-bottom:4px;">V2 表现</div>
+                <div style="font-size:0.82rem;color:var(--g700);">7-8轮 · 读图出错 · 反复追问已知信息 · 学生多次不耐烦 · 无增值总结</div>
+            </div>
+            <div style="background:var(--success-bg);border-radius:8px;padding:14px;">
+                <div style="font-weight:700;color:var(--success);font-size:0.85rem;margin-bottom:4px;">V3 表现</div>
+                <div style="font-size:0.82rem;color:var(--g700);">5轮完成 · 识别学生水平后跳过基础 · 错误直接精准指出 · 收尾增值防丢分</div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- ===== 7. 迭代优化 ===== -->
 <section id="iteration">
-    <div class="sec-label">模块四 · 迭代优化</div>
+    <div class="sec-label">模块三 · 步骤3：发现问题 & 步骤4：迭代优化</div>
     <div class="sec-title">V2 → V3：从流程驱动到 AI Native</div>
     <div class="sec-desc">与 AI 共创的三次架构跃迁。不是修补问题，是重新思考"Prompt应该怎么写"。</div>
 
